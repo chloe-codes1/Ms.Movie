@@ -31,12 +31,25 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # DRF
+    'rest_framework',
+    'rest_framework.authtoken',
+
+    # rest-auth
+    'rest_auth',  # login, logout
+    'allauth',  # signup
+    'allauth.account',  # signup
+    'rest_auth.registration',  # signup
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # apps
+    'reviews'
 ]
 
 MIDDLEWARE = [
@@ -118,3 +131,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+AUTH_USER_MODEL = 'accounts.user'
