@@ -3,7 +3,6 @@ from django.contrib.auth import settings
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 
-
 class Review(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
@@ -15,9 +14,9 @@ class Review(models.Model):
                                      format='JPEG',
                                      options={'quality': 60})
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    like = models.ManyToManyField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    liked_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_reviews')
     # 신고하기
-    report = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    # report = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
 class Comment(models.Model):

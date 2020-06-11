@@ -12,12 +12,12 @@ def review_list_and_create(request):
         serializer = ReviewListSerializer(reviews, many=True)
         return Response(serializer.data)
 
-    # @permission_classes([IsAuthenticated])
-    def create(request):
-        serializer = ReviewSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
-            return Response(serializer.data)
+# @permission_classes([IsAuthenticated])
+def create(request):
+    serializer = ReviewSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(user=request.user)
+        return Response(serializer.data)
 
     if request.method == 'POST':
         return create(request)
