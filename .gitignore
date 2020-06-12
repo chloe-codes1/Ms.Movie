@@ -237,5 +237,5 @@ docs/_book
 
 # TODO: where does this rule come from?
 test/
-
+.idea
 # End of https://www.toptal.com/developers/gitignore/api/venv,python,django,vue,visualstudiocode
