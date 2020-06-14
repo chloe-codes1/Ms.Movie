@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>Movies</h1>
-    <div v-for="movie in movies" :key="movie.id">
-      <MovieItem :movie='movie' />
-    </div>
+    <h1 >Movies</h1>
+      <div class="row">
+        <MovieItem v-for="movie in movies" :key="movie.id" :movie='movie' />
+      </div>
   </div>
 </template>
 
@@ -13,14 +13,20 @@ import MovieItem from '@/components/MovieItem'
 
 export default {
   name: 'Movies',
-  data: () => ({
-    query: ''
-  }),
-  component:{
+  components:{
     MovieItem
+  },
+  data(){
+    return{
+      perPage:3,
+      currentPage:1,
+    }
   },
   computed: {
     ...mapState(['movies']),
+    rows(){
+      return this.movies.length
+    }
   },
   methods: {
     ...mapActions(['fetchMovies'])

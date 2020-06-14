@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img class="queen-image" alt="queen" src="../assets/crown.png">
-    <h4> 메인 페이지입니다. 이곳을 꾸며야 합니다</h4>
+    <h4> 메인 페이지입니다. 이곳을 꾸며야 합니다. 하하하.</h4>
   </div>
 </template>
 
