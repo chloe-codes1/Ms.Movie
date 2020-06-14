@@ -1,18 +1,26 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img class="queen-image" alt="queen" src="../assets/crown.png">
+    <h4> 메인 페이지입니다. 이곳을 꾸며야 합니다</h4>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
   }
 }
 </script>
+<style scoped>
+.queen-image {
+  margin-top: 200px;
+  width: 300px;
+}
+
+h4{
+  margin-top: 70px;
+}
+</style>
