@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Review, Comment
+from .models import Review, Comment, Report
 from accounts.serializers import UserSerializer
 
 # create
@@ -9,7 +9,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ('id', 'title', 'content', 'user', 'created_at', 'updated_at', 'image',)
+        fields = ('id', 'title', 'content', 'user', 'created_at', 'updated_at', 'image', 'rating',)
         read_only_fields = ('id', 'user', 'created_at', 'updated_at')
 
 class ReviewListSerializer(serializers.ModelSerializer):
@@ -28,10 +28,13 @@ class ReviewDetailSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ReviewReportSerializer(serializers.ModelSerializer):
+class ReportSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source="user.username")
+    review_title = serializers.CharField(source="review.title")
+    review_user = serializers.CharField(source="review.user.username")
     class Meta:
-        model = Review
-        fields = ('id', 'title')
+        model = Report
+        fields = '__all__'
 
 
 
