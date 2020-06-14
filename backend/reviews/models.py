@@ -6,6 +6,7 @@ from imagekit.processors import ResizeToFit
 class Review(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
+    rating = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(blank=True)
@@ -14,7 +15,18 @@ class Review(models.Model):
                                      format='JPEG',
                                      options={'quality': 60})
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    liked_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_reviews')
+    liked_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_reviews', blank=True)
+    disliked_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='disliked_reviews', blank=True)
+
+
+    @property
+    def likes(self):
+        return self.liked_users.count()
+    
+    @property
+    def dislikes(self):
+        return self.disliked_users.count()
+
     # 신고하기
     # report = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 

@@ -165,11 +165,33 @@ USE_TZ = True
 STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'accounts.User'
 SITE_ID = 1
+
+# DRF auth settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',  # Token 에서 교체
+        # 'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+# DRF auth가 JWT를 사용하게 하는 설정
+REST_USE_JWT = True
+
+# JWT Token 관련 정보 설정: 어떤 정보를 담아 보낼지
+import datetime
+JWT_AUTH = {
+    'JWT_SECRET_KEY': SECRET_KEY,
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_ALLOW_REFRESH': True,
+		# 1주일간 유효한 토큰
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+		# 28일 마다 갱신됨(유효 기간 연장시)
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=28),
+}
+
+
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
+
