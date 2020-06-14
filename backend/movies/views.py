@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
-from .serializers import MovieDetailSerializer, MovieListSerializer
+from .serializers import MovieSerializer
 from .models import Movie, Country, Cast
 
 import requests
@@ -23,7 +23,7 @@ class MovieAPI(APIView):
     # GET 요청
     def get(self, request, format=None):
         movies = Movie.objects.all()
-        serializer = MovieListSerializer(movies, many=True)
+        serializer = MovieSerializer(movies, many=True)
         return Response(serializer.data)
 
     # POST 요청
@@ -108,5 +108,5 @@ class MovieDetailAPI(APIView):
 
     def get(self, request, movie_id, format=None):
         movie = get_object_or_404(Movie, pk=movie_id)
-        serializer = MovieDetailSerializer(movie)
+        serializer = MovieSerializer(movie)
         return Response(serializer.data)

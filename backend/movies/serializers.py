@@ -1,14 +1,19 @@
 from rest_framework import serializers
-from .models import Movie
+from .models import Movie, Cast
 
-class MovieListSerializer(serializers.ModelSerializer):
 
+class CastSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Movie
-        fields = ('id', 'title', 'poster','vote_average','tmdb_id')
+        model = Cast
+        fields = '__all__'
 
 
-class MovieDetailSerializer(serializers.ModelSerializer):
+class MovieSerializer(serializers.ModelSerializer):
+    
+    casts = CastSerializer(many=True)
+    countries = serializers.StringRelatedField(many=True)
+    genres = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Movie
         fields = '__all__'
