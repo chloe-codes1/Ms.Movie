@@ -9,13 +9,11 @@ from .serializers import ReviewSerializer, ReviewDetailSerializer, ReviewListSer
 from .models import Review, Comment, Report
 
 
-
 class ReviewListCreate(APIView):
     def get(self, request):
         reviews = Review.objects.all()
         serializer = ReviewListSerializer(reviews, many=True)
         return Response(serializer.data)
-
     @permission_classes([IsAuthenticated])
     def post(self, request):
         serializer = ReviewSerializer(data=request.data)
@@ -24,7 +22,7 @@ class ReviewListCreate(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+      
 class ReviewDetail(APIView):
     def get_object(self, pk):
         return get_object_or_404(Review, pk=pk)
@@ -33,7 +31,6 @@ class ReviewDetail(APIView):
         review = self.get_object(review_pk)
         serializer = ReviewDetailSerializer(review)
         return Response(serializer.data)
-
     @permission_classes([IsAuthenticated])
     def put(self, request, review_pk):
         review = self.get_object(review_pk)
@@ -46,6 +43,7 @@ class ReviewDetail(APIView):
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
+          
     @permission_classes([IsAuthenticated])
     def delete(self, request, review_pk):
         review = self.get_object(review_pk)
@@ -54,7 +52,6 @@ class ReviewDetail(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
-
 
 # 좋아요 기능
 @permission_classes([IsAuthenticated])
@@ -72,6 +69,7 @@ def like(request, review_pk):
     }
     return JsonResponse(context)
 
+  
 # 싫어요 기능
 @permission_classes([IsAuthenticated])
 def dislike(request, review_pk):
@@ -88,7 +86,7 @@ def dislike(request, review_pk):
     }
     return JsonResponse(context)
 
-
+  
 class CommentCreate(APIView):
     @permission_classes([IsAuthenticated])
     def post(self, request, pk):
@@ -99,7 +97,7 @@ class CommentCreate(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+      
 class CommentDetail(APIView):
     def get_comment(self, pk):
         return get_object_or_404(Comment, pk=pk)
@@ -116,6 +114,7 @@ class CommentDetail(APIView):
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
+          
     @permission_classes([IsAuthenticated])
     def delete(self, request, pk):
         comment = self.get_comment(pk)
@@ -125,7 +124,7 @@ class CommentDetail(APIView):
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-
+          
 # 신고하기
 class Reporting(APIView):
     def get(self, request, review_pk):
@@ -133,6 +132,7 @@ class Reporting(APIView):
         serializer = ReportSerializer(reports, many=True)
         return Response(serializer.data)
 
+      
     @permission_classes([IsAuthenticated])
     def post(self, request, review_pk):
         review = get_object_or_404(Review, pk=review_pk)
@@ -140,6 +140,6 @@ class Reporting(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user, review=review)
             return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

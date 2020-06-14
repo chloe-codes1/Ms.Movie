@@ -37,6 +37,16 @@ class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
 
+class Report(models.Model):
+    REPORT_REASON = [
+        ('1', '부적절한 홍보 게시글'),
+        ('2', '음란성 또는 청소년에게 부적합한 내용'),
+        ('3', '명예훼손 / 사생활 침해 및 저작권침해 등'),
+        ('4', '기타'),
+    ]
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='reporting_reviews', on_delete=models.CASCADE)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    reason = models.CharField(max_length=1, choices=REPORT_REASON)
 
 class Report(models.Model):
     REPORT_REASON = [
