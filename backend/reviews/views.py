@@ -9,6 +9,7 @@ from .serializers import ReviewSerializer, ReviewDetailSerializer, ReviewListSer
 from .models import Review, Comment, Report
 
 
+
 class ReviewListCreate(APIView):
     def get(self, request):
         reviews = Review.objects.all()

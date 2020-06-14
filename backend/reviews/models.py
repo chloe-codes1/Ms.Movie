@@ -28,7 +28,6 @@ class Review(models.Model):
     def dislikes(self):
         return self.disliked_users.count()
 
-
 class Comment(models.Model):
     content = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -47,4 +46,5 @@ class Report(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='reporting_reviews', on_delete=models.CASCADE)
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     reason = models.CharField(max_length=1, choices=REPORT_REASON)
+
 
