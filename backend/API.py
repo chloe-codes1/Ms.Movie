@@ -18,7 +18,5 @@ def get_genres(tmdb_id):
         if d.get('id') == tmdb_id:
             return d.get('name')
 
-print('장르~', get_genres(12))
-
 # def get_actors():
 
