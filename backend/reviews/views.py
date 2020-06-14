@@ -1,98 +1,145 @@
-from rest_framework import generic
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from rest_framework import status
 from rest_framework.views import APIView
-
-from django.views.generic import ListView, DetailView
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .serializers import ReviewSerializer, ReviewDetailSerializer, ReviewListSerializer, CommentSerializer
-from .models import Review, Comment
-
-class ReviewList(APIView):
-    def get(self, request, format=None):
+from .serializers import ReviewSerializer, ReviewDetailSerializer, ReviewListSerializer, CommentSerializer, ReportSerializer
+from .models import Review, Comment, Report
 
 
 
-
-@api_view(['GET', 'POST'])
-def review_list_and_create(request):
-    def index(request):
+class ReviewListCreate(APIView):
+    def get(self, request):
         reviews = Review.objects.all()
         serializer = ReviewListSerializer(reviews, many=True)
         return Response(serializer.data)
 
     @permission_classes([IsAuthenticated])
-    def create(request):
+    def post(self, request):
         serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
             return Response(serializer.data)
-
-    if request.method == 'POST':
-        return create(request)
-    else:
-        return index(request)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET','PUT', 'PATCH', 'DELETE'])
-def review_detail_update_delete(request, review_pk):
-    review = Review.objects.get(pk=review_pk)
-    def detail(request, review_pk):
+class ReviewDetail(APIView):
+    def get_object(self, pk):
+        return get_object_or_404(Review, pk=pk)
+
+    def get(self, request, review_pk):
+        review = self.get_object(review_pk)
         serializer = ReviewDetailSerializer(review)
         return Response(serializer.data)
 
     @permission_classes([IsAuthenticated])
-    def update(request, review_pk):
-        if request.user == review.user:
+    def put(self, request, review_pk):
+        review = self.get_object(review_pk)
+        if review.user == request.user:
             serializer = ReviewSerializer(review, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
-            return Response(serializer.data)
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
 
     @permission_classes([IsAuthenticated])
-    def delete(request, review_pk):
-        if request.user == review.user:
+    def delete(self, request, review_pk):
+        review = self.get_object(review_pk)
+        if review.user == request.user:
             review.delete()
-        return Response()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
 
-    if request.method == 'GET':
-        return detail(request, review_pk)
-    elif request.method == 'PUT':
-        return update(request, review_pk)
+
+# 좋아요 기능
+@permission_classes([IsAuthenticated])
+def like(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    user = request.user
+    is_like = True
+    if review.like_users.filter(id=user.id).exists():
+        review.like_users.remove(user)
+        is_like = False
     else:
-        return delete(request, review_pk)
+        review.like_users.add(user)
+    context = {
+        'is_like': is_like,
+    }
+    return JsonResponse(context)
 
-
-@api_view(['POST'])
+# 싫어요 기능
 @permission_classes([IsAuthenticated])
-def comment_create(request, review_pk):
-    review = Review.objects.get(pk=review_pk)
-    serializer = CommentSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        serializer.save(user=request.user, review=review)
-        return Response(serializer.data)
+def dislike(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    user = request.user
+    is_dislike = True
+    if review.dislike_users.filter(id=user.id).exists():
+        review.dislike_users.remove(user)
+        is_dislike = False
+    else:
+        review.dislike_users.add(user)
+    context = {
+        'is_dislike': is_dislike,
+    }
+    return JsonResponse(context)
 
-@api_view(['PUT', 'DELETE'])
-@permission_classes([IsAuthenticated])
-def comment_update_and_delete(request, comment_pk):
-    comment = Comment.objects.get(pk=comment_pk)
 
-    def comment_update(request):
-        if request.user == comment.user:
+class CommentCreate(APIView):
+    @permission_classes([IsAuthenticated])
+    def post(self, request, pk):
+        review = get_object_or_404(Review, pk=pk)
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user, review=review)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CommentDetail(APIView):
+    def get_comment(self, pk):
+        return get_object_or_404(Comment, pk=pk)
+
+    @permission_classes([IsAuthenticated])
+    def put(self, request, pk):
+        comment = self.get_comment(pk)
+        if comment.user == request.user:
             serializer = CommentSerializer(comment, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
-                return Response
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
 
-    def comment_delete(request):
-        if request.user == comment.user:
+    @permission_classes([IsAuthenticated])
+    def delete(self, request, pk):
+        comment = self.get_comment(pk)
+        if comment.user == request.user:
             comment.delete()
-        return Response()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
 
-    if request.method == 'PUT':
-        return comment_update(request)
-    else:
-        return comment_delete(request)
 
+# 신고하기
+class Reporting(APIView):
+    def get(self, request, review_pk):
+        reports = Report.objects.filter(review_id=review_pk)
+        serializer = ReportSerializer(reports, many=True)
+        return Response(serializer.data)
+
+    @permission_classes([IsAuthenticated])
+    def post(self, request, review_pk):
+        review = get_object_or_404(Review, pk=review_pk)
+        serializer = ReportSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user, review=review)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
