@@ -79,14 +79,14 @@ export default new Vuex.Store({
  
     // ReviewList
     getReviews({commit}, id) {
-      axios.get(SERVER.URL +`/reviews/${id}`)
+      axios.get(SERVER.URL +`/reviews/${id}/`)
         .then(response => commit('SET_REVIEWS', response.data))
         .catch(err => console.log(err))       
     },
     createReview( {getters}, id, reviewData ) {
-      axios.post(SERVER.URL + `reviews/${id}`, reviewData, getters.config)
+      axios.post(SERVER.URL + `/reviews/${id}/`, reviewData, getters.config)
         .then(() => {
-          router.push(`/reviews/${id}`)
+          router.push(`/reviews/${id}/`)
         })
         .catch(err => console.log(err))
     },
