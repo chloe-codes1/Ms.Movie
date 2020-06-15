@@ -14,13 +14,14 @@ export default new Vuex.Store({
   },
   getters: {
     isLoggedIn: state => !!state.authToken,
-    config: state => ({headers: { Authorization: `Token ${state.authToken}` }}),
-  },
-  mutations:{
+    config: () => ({headers: { Authorization: `Token ${cookies.get('auth-token')}` }}),
+  }, 
+  mutations:{ 
     SET_TOKEN(state, token){
       state.authToken = token
-      cookies.set('auth-token', token)
-    },
+      console.log('abc', token)
+      cookies.set('auth-token', token) 
+    }, 
     SET_MOVIES(state, movies){
       state.movies = movies
     },
@@ -28,34 +29,35 @@ export default new Vuex.Store({
       state.reviews = reviews
     },
   },
-  actions: {
+  actions: { 
     postAuthData({ commit }, info){
       axios.post(SERVER.URL + info.location, info.data)
       .then(res => {
+        console.log(res.data, 'res.data')
         commit('SET_TOKEN', res.data.key)
-        router.push('/')
+        router.push({ name: 'Home'})
       })
       .catch(
         err => console.log(err.response.data)
       )
-    },
+    },  
     signup({ dispatch }, signupData){
       const info = {
         data: signupData,
         location: SERVER.ROUTES.signup
       }
-      dispatch('postAuthData', info) // 인자 하나만 넘길 수 있어서 info 로 묶음
+      dispatch('postAuthData', info) 
     },
-    // 첫번째 인자로 context가 들어오는데 그 중 dispatch 사용할거라서 { dispatch } => de-structuring!
     login( { dispatch }, loginData){
-      const info = {
-        data: loginData,
+      const info = {  
+        data: loginData,  
         location: SERVER.ROUTES.login
-      }
+      }       
+      console.log('info', info);
       dispatch('postAuthData', info)
     },
-    logout({ getters, commit }){
-      axios.post(SERVER.URL + SERVER.ROUTES.logout, null, getters.config ) // 데이터는 없어도 되지만 header가 필요함
+    logout({ commit }){
+      axios.get(SERVER.URL + SERVER.ROUTES.logout) // 데이터는 없어도 되지만 header가 필요함
         .then( ()=> { //Django DB에서는 삭제되어 있음 but, cookie, state에는 남아있음
           // cookies.remove가 null 뒤에 들어가야함!
           commit('SET_TOKEN', null)  // commit은 state 를 바꿀 수 있는 유일한 방법!!! -> state 에서도 삭제
@@ -75,10 +77,13 @@ export default new Vuex.Store({
         .then(response => commit('SET_REVIEWS', response.data))
         .catch(err => console.log(err))       
     },
-    createReview( {getters}, info) {
-      axios.post(SERVER.URL + `/reviews/${info.id}/`, info.reviewData, getters.config)
-        .then(() => {
-          router.push(`/reviews/${info.id}/`)
+    createReview( {getters}, data) {
+      console.log(cookies.get('auth-token'));
+      console.log(getters.config) 
+      axios.post(SERVER.URL + `/reviews/${data.id}/`, data.reviewData, getters.config)
+        .then(res => {
+          console.log(res)
+          history.go(0)
         })
         .catch(err => console.log(err))
     },

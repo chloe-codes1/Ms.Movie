@@ -23,14 +23,13 @@ class ReviewListCreate(APIView):
     def post(self, request, movie_pk):
         movie = get_object_or_404(Movie, id=movie_pk)
         user = request.user
-        context = { 
-            "request":request
-        }
-        serializer = ReviewSerializer(data=request.data, context=context)
+        print(user, movie)
+        serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             review = serializer.save(user=user, movie=movie)
             if review:
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
       

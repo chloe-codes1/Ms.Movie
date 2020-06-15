@@ -30,6 +30,9 @@
             <button @click="toggleHidden" class="btn mr-auto">
                 <img class="play-btn" alt="queen" src="@/assets/video.png"> <span>Play Trailer</span>
             </button>
+            <button @click="writeReview" @click.self="$emit('close')" type="button" class="close" data-dismiss="modal" aria-label="Close">  
+              Write a review  
+            </button  >
             <button  type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
@@ -97,6 +100,9 @@ export default {
             })
             .catch(err => console.error(err))
         },
+    writeReview() {
+      this.$router.push(`/reviews/${this.movie.id}`)
+    } 
   },
   components:{
     Trailer
