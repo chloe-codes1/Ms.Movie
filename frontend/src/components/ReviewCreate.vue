@@ -8,7 +8,7 @@
         <!-- rating -->
         <label for="rating">Rating:</label>
         <b-form-rating id="rating" inline v-model="reviewData.rating" variant="warning" class="mb-2" stars="10"></b-form-rating>
-        
+        value: {{reviewData.rating}}
         <!-- content -->
         <b-form-group class="mb-2" label="Content" label-for="content">
             <b-form-textarea

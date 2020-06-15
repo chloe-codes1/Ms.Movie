@@ -18,20 +18,21 @@
 import { mapActions } from 'vuex'
 
 export default {
-    name: 'SignupView',
+    name: "SignupView",
     data() {
-        return{
-            signupData : {
-                username: null,
-                password1: null,
-                password2: null
-            }
+        return {
+        signupData: {
+            username: null,
+            password1: null,
+            password2: null
+        }
         }
     },
     methods: {
         ...mapActions(["signup"])
     }
 }
+
 </script>
 
 <style>
