@@ -1,15 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
 import cookies from 'vue-cookies'
 import router from '@/router'
 import axios from 'axios'
 import SERVER from '@/api/drf'
-
-
 Vue.use(Vuex)
-
-
 export default new Vuex.Store({
   state: {
     authToken: cookies.get('auth-token'),
@@ -29,11 +24,9 @@ export default new Vuex.Store({
     SET_MOVIES(state, movies){
       state.movies = movies
     },
-
     SET_REVIEWS(state, reviews){
       state.reviews = reviews
     },
-
   },
   actions: {
     postAuthData({ commit }, info){
@@ -76,19 +69,16 @@ export default new Vuex.Store({
         .then(response => commit('SET_MOVIES', response.data))
         .catch(err => console.log(err))
     },
- 
     // ReviewList
     getReviews({commit}, id) {
-      axios.get(SERVER.URL +`/reviews/${id}`)
+      axios.get(SERVER.URL +`/reviews/${id}/`)
         .then(response => commit('SET_REVIEWS', response.data))
         .catch(err => console.log(err))       
     },
-    createReview( {getters}, reviewData) {
-      
-      console.log(reviewData)
-      axios.post(SERVER.URL + `reviews/`, reviewData, getters.config)
+    createReview( {getters}, id, reviewData ) {
+      axios.post(SERVER.URL + `/reviews/${id}/`, reviewData, getters.config)
         .then(() => {
-          router.push(`/reviews/`)
+          router.push(`/reviews/${id}/`)
         })
         .catch(err => console.log(err))
     },
@@ -98,7 +88,6 @@ export default new Vuex.Store({
         .then(response => commit('SET_REVIEWS', response.data))
         .catch(err => console.log(err))
     },
-
   },
   modules: {
   }
