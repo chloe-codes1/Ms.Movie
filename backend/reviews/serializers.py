@@ -1,16 +1,16 @@
 from rest_framework import serializers
-from .models import Review, Comment, Report
+from .models import Review, Comment, Report, REPORT_REASON
 from accounts.serializers import UserSerializer
 
 # create
 class ReviewSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=False)
     created_at = serializers.DateTimeField(required=False)
-
     class Meta:
         model = Review
-        fields = ('id', 'title', 'content', 'user', 'created_at', 'updated_at', 'image', 'rating',)
-        read_only_fields = ('id', 'user', 'created_at', 'updated_at')
+        fields = ('id', 'title', 'content', 'user', 'created_at', 'updated_at', 'image', 'rating', 'movie')
+        read_only_fields = ('id', 'user', 'created_at', 'updated_at', 'movie')
+
 
 class ReviewListSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source="user.username")
@@ -32,6 +32,7 @@ class ReportSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source="user.username")
     review_title = serializers.CharField(source="review.title")
     review_user = serializers.CharField(source="review.user.username")
+    reason = serializers.ChoiceField(choices=REPORT_REASON)
     class Meta:
         model = Report
         fields = '__all__'
