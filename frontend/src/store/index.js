@@ -33,7 +33,7 @@ export default new Vuex.Store({
       axios.post(SERVER.URL + info.location, info.data)
       .then(res => {
         commit('SET_TOKEN', res.data.key)
-        router.push({ name: 'Home '})
+        router.push('/')
       })
       .catch(
         err => console.log(err.response.data)
@@ -58,9 +58,9 @@ export default new Vuex.Store({
       axios.post(SERVER.URL + SERVER.ROUTES.logout, null, getters.config ) // 데이터는 없어도 되지만 header가 필요함
         .then( ()=> { //Django DB에서는 삭제되어 있음 but, cookie, state에는 남아있음
           // cookies.remove가 null 뒤에 들어가야함!
-          commit('SET_TOKEN',null)  // commit은 state 를 바꿀 수 있는 유일한 방법!!! -> state 에서도 삭제
+          commit('SET_TOKEN', null)  // commit은 state 를 바꿀 수 있는 유일한 방법!!! -> state 에서도 삭제
           cookies.remove('auth-token') //cookie 에서는 삭제
-          router.push({name: 'Home'})
+          router.push('/')
         })
         .catch(err => console.log(err.response.data))
     },
@@ -75,10 +75,10 @@ export default new Vuex.Store({
         .then(response => commit('SET_REVIEWS', response.data))
         .catch(err => console.log(err))       
     },
-    createReview( {getters}, id, reviewData ) {
-      axios.post(SERVER.URL + `/reviews/${id}/`, reviewData, getters.config)
+    createReview( {getters}, info) {
+      axios.post(SERVER.URL + `/reviews/${info.id}/`, info.reviewData, getters.config)
         .then(() => {
-          router.push(`/reviews/${id}/`)
+          router.push(`/reviews/${info.id}/`)
         })
         .catch(err => console.log(err))
     },
