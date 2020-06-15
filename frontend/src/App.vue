@@ -19,7 +19,7 @@
                 <router-link to="/movies" class="text-decoration-none nav-links mr-3 py-2">Movies</router-link>
               </li>
               <li class="nav-item">
-                <router-link to="/reviews" class="text-decoration-none nav-links mr-3 py-2">Review</router-link>
+                <router-link to="/reviews/:id" class="text-decoration-none nav-links mr-3 py-2">Review</router-link>
               </li>
               <li v-if="isLoggedIn" class="nav-item">
                 <router-link to="/accounts/logout" @click.native="logout" class="text-decoration-none nav-links py-2">Logout</router-link>

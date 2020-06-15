@@ -23,7 +23,7 @@ Vue.use(VueRouter)
     name: 'Movies',
     component: Movies,
     meta: {
-      title: 'Ms.Move | Movies'
+      title: 'Ms.Movie | Movies'
     }
   },
   {
