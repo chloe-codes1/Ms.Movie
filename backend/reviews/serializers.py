@@ -1,11 +1,13 @@
 from rest_framework import serializers
 from .models import Review, Comment, Report, REPORT_REASON
 from accounts.serializers import UserSerializer
+from movies.serializers import MovieSerializer
 
 # create
 class ReviewSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=False)
     created_at = serializers.DateTimeField(required=False)
+    
     class Meta:
         model = Review
         fields = ('id', 'title', 'content', 'user', 'created_at', 'updated_at', 'rating', 'movie')

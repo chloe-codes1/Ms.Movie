@@ -7,6 +7,7 @@ export default{
         logout: '/rest-auth/logout/',
         movieList: '/movies/',
         createArticle: '/articles/create/',
-        articleList: '/articles/',
+        reviewList: '/reviews/:id/',
+        reviewDetail: '/reviews/detail/',
     }
 }

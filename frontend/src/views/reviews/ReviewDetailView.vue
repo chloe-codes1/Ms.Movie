@@ -1,31 +1,31 @@
 <template>
     <div>
-        <p>{{review}}</p>
+        <p>{{reviews}}</p>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
-const SERVER = 'http://localhost:8000'
+import { mapState, mapActions } from 'vuex'
+
 export default {
     name: 'ReviewDetailView',
     data() {
         return {
             id: this.$route.params.id,
-            review : null
+            
         }
+    },
+    computed: {
+        ...mapState(['reviews'])
+
     },
     methods: {
-        getReview() {
-            axios.get(`${SERVER}/reviews/${this.id}/`)
-            .then(res => {
-                console.log(res.data)
-                this.review = res.data
-            })  
-        }
+        ...mapActions(['getReview'])
+
     },
+        
     created() {
-        this.getReview()
+        this.getReview(this.id)
     }
 }
 </script>
