@@ -3,8 +3,8 @@ from django_mysql.models import Model
 from django.contrib.auth import settings
 from movies.models import Movie
 
-
 class Review(models.Model):
+    movie = models.ForeignKey(Movie,on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     content = models.TextField()
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
@@ -43,7 +43,7 @@ REPORT_REASON = [
 class Report(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='reporting_reviews', on_delete=models.CASCADE)
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
-    reason = models.CharField(max_length=2, choices=REPORT_REASON)
+    reason = models.CharField(max_length=200 ,choices=REPORT_REASON)
 
 
 

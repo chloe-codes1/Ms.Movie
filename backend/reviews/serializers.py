@@ -8,7 +8,7 @@ class ReviewSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(required=False)
     class Meta:
         model = Review
-        fields = ('id', 'title', 'content', 'user', 'created_at', 'updated_at', 'image', 'rating', 'movie')
+        fields = ('id', 'title', 'content', 'user', 'created_at', 'updated_at', 'rating', 'movie')
         read_only_fields = ('id', 'user', 'created_at', 'updated_at', 'movie')
 
 
