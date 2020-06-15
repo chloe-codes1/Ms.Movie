@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from rest_framework import status
 
 from .serializers import MovieSerializer
 from .models import Movie, Country, Cast
@@ -31,8 +32,8 @@ class MovieAPI(APIView):
         key = settings.TMDB_API_KEY
         base_url = 'https://api.themoviedb.org/3/'
 
-        for page in range(1,50): # Change it to 501 on deployment!
-            url = f'{base_url}discover/movie?api_key={key}&language=ko-kr&sort_by=popularity.desc&include_video=false&page={page}'
+        for page in range(1,5): # Change it to 501 on deployment!
+            url = f'{base_url}discover/movie?api_key={key}&sort_by=popularity.desc&include_video=false&page={page}'
             response = requests.get(url).json()
             data = response['results']
             for i in range(20):
@@ -43,7 +44,7 @@ class MovieAPI(APIView):
                     if Movie.objects.filter(tmdb_id=tmdb_id):
                         continue
                     
-                    detail_url = f'{base_url}movie/{tmdb_id}?api_key={key}&language=ko-kr&append_to_response=credits'
+                    detail_url = f'{base_url}movie/{tmdb_id}?api_key={key}&append_to_response=credits'
                     detail_response = requests.get(detail_url).json()
                    
                     countries = []
@@ -62,11 +63,11 @@ class MovieAPI(APIView):
                         try:
                             c = Cast.objects.get(cast_id=cast_id)
                         except Cast.DoesNotExist:
-                            cast_url = f'{base_url}person/{cast_id}?api_key={key}&language=ko-kr'
+                            cast_url = f'{base_url}person/{cast_id}?api_key={key}'
                             cast_response = requests.get(cast_url).json()
                             department = cast_response.get('known_for_department')
 
-                            if department == 'Directing' or department == 'Acting':
+                            if department == 'Acting':
 
                                 c = Cast.objects.create(
                                         name = cast_response.get('name'),
@@ -102,7 +103,8 @@ class MovieAPI(APIView):
                     continue
                 except AttributeError:
                     continue
-
+        
+        return Response(status=status.HTTP_201_CREATED)
 
 class MovieDetailAPI(APIView):
 
