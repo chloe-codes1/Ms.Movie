@@ -35,65 +35,20 @@
       </div>
     </nav> 
 
-
-
-
-    <router-view @submit-login-data="login" @submit-signup-data="signup"/>
+    <router-view />
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-const SERVER = 'http://localhost:8000'
+import {mapActions, mapGetters} from 'vuex'
 
-export default {
+export default { 
   name: 'App',
-  data() {
-    return {
-      isLoggedIn: false
-    }
-  },
   methods: {
-    setCookie(key) {
-      this.$cookies.set('auth-token', key)
-      this.isLoggedIn = true
-    },
-    signup(signupData) {
-      axios.post(`${SERVER}/rest-auth/signup/`, signupData)
-        .then(res => {
-          console.log(`${SERVER}/rest-auth/signup/`)
-          this.setCookie(res.data.key)
-          this.$router.push('/')
-        .catch(err => console.log(err.response.data))
-        })
-    },
-    login(loginData) {
-      axios.post(`${SERVER}/rest-auth/login/`, loginData)
-        .then(res => {
-          this.setCookie(res.data.key)
-          this.$router.push('/')
-        .catch(err => console.log(err.response.data))
-        })
-    },
-    logout() {
-      const requestHeaders = {
-        headers: {
-          Authorization: `Token ${this.$cookies.get('auth-token')}`
-        }
-      }
-      axios.post(`${SERVER}/rest-auth/logout/`,null, requestHeaders)
-        .then(res => {
-          console.log(res.data)
-          this.$cookies.remove('auth-token')
-          this.isLoggedIn = false
-          this.$router.push('/articless')
-        })
-    },
-
-    
+    ...mapActions(['logout'])
   },
-  mounted(){
-  this.isLoggedIn = this.$cookies.isKey('auth-token')
+  computed: {
+    ...mapGetters(['isLoggedIn'])
   }
 }
 

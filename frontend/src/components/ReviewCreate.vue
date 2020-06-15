@@ -19,8 +19,7 @@
             max-rows="6"
             ></b-form-textarea>
         </b-form-group>
-        
-        <b-button @click="createReview">Submit</b-button>  
+        <b-button @click="onWrite">Submit</b-button> 
     </div>
 </template>
 
@@ -35,12 +34,15 @@ export default {
                 content: null,
                 rating: null
             },
+            id: this.$route.params.id
         }
     },
-    methods: {
-        ...mapActions(['createReview'])
-    }
-    
+    methods: { 
+        ...mapActions(['createReview']), 
+        onWrite() { 
+            this.createReview({reviewData: this.reviewData, id: this.$route.params.id})
+        }
+    },
 }
 </script>
 
