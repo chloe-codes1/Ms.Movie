@@ -5,6 +5,7 @@ import Movies from '@/views/movies/Movies.vue'
 
 import SignupView from '@/views/accounts/SignupView.vue'
 import LoginView from '@/views/accounts/LoginView.vue'
+import LogoutView from '@/views/accounts/LogoutView.vue'
 
 import ReviewListCreate from '@/views/reviews/ReviewListCreate.vue'
 import ReviewDetailView from '@/views/reviews/ReviewDetailView.vue'
@@ -32,6 +33,11 @@ Vue.use(VueRouter)
     meta: {
       title: 'Sign In'
     }
+  },
+  {
+    path: '/accounts/logout',
+    name: 'Logout',
+    component: LogoutView,
   },
   {
     path: '/accounts/signup',

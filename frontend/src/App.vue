@@ -22,12 +22,12 @@
                 <router-link to="/reviews/:id" class="text-decoration-none nav-links mr-3 py-2">Review</router-link>
               </li>
               <li v-if="isLoggedIn" class="nav-item">
-                <router-link to="/accounts/logout" @click.native="logout" class="text-decoration-none nav-links py-2">Logout</router-link>
+                <router-link to="/accounts/logout" class="text-decoration-none nav-links py-2">Logout</router-link>
               </li>
-              <li  v-if="!isLoggedIn" class="nav-item active">
+              <li v-if="!isLoggedIn" class="nav-item active">
                 <router-link to="/accounts/login" class="text-decoration-none nav-links mr-3 py-2">Login</router-link>
               </li>
-              <li  v-if="!isLoggedIn" class="nav-item">
+              <li v-if="!isLoggedIn" class="nav-item">
                 <router-link to="/accounts/signup" class="text-decoration-none nav-links py-2">Sign Up</router-link>
               </li>
           </ul>
@@ -38,63 +38,61 @@
 
 
 
-    <router-view @submit-login-data="login" @submit-signup-data="signup"/>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-const SERVER = 'http://localhost:8000'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'App',
-  data() {
-    return {
-      isLoggedIn: false
-    }
+  computed: {
+    ...mapGetters(['isLoggedIn'])
   },
+  
   methods: {
-    setCookie(key) {
-      this.$cookies.set('auth-token', key)
-      this.isLoggedIn = true
-    },
-    signup(signupData) {
-      axios.post(`${SERVER}/rest-auth/signup/`, signupData)
-        .then(res => {
-          console.log(`${SERVER}/rest-auth/signup/`)
-          this.setCookie(res.data.key)
-          this.$router.push('/')
-        .catch(err => console.log(err.response.data))
-        })
-    },
-    login(loginData) {
-      axios.post(`${SERVER}/rest-auth/login/`, loginData)
-        .then(res => {
-          this.setCookie(res.data.key)
-          this.$router.push('/')
-        .catch(err => console.log(err.response.data))
-        })
-    },
-    logout() {
-      const requestHeaders = {
-        headers: {
-          Authorization: `Token ${this.$cookies.get('auth-token')}`
-        }
-      }
-      axios.post(`${SERVER}/rest-auth/logout/`,null, requestHeaders)
-        .then(res => {
-          console.log(res.data)
-          this.$cookies.remove('auth-token')
-          this.isLoggedIn = false
-          this.$router.push('/articless')
-        })
-    },
+  },
+
+  // methods: {
+    // setCookie(key) {
+    //   this.$cookies.set('auth-token', key)
+    //   this.isLoggedIn = true
+    // },
+    // signup(signupData) {
+    //   axios.post(`${SERVER}/rest-auth/signup/`, signupData)
+    //     .then(res => {
+    //       console.log(`${SERVER}/rest-auth/signup/`)
+    //       this.setCookie(res.data.key)
+    //       this.$router.push('/')
+    //     .catch(err => console.log(err.response.data))
+    //     })
+    // },
+    // login(loginData) {
+    //   axios.post(`${SERVER}/rest-auth/login/`, loginData)
+    //     .then(res => {
+    //       this.setCookie(res.data.key)
+    //       this.$router.push('/')
+    //     .catch(err => console.log(err.response.data))
+    //     })
+    // },
+    // logout() {
+    //   const requestHeaders = {
+    //     headers: {
+    //       Authorization: `Token ${this.$cookies.get('auth-token')}`
+    //     }
+    //   }
+    //   axios.post(`${SERVER}/rest-auth/logout/`,null, requestHeaders)
+    //     .then(res => {
+    //       console.log(res.data)
+    //       this.$cookies.remove('auth-token')
+    //       this.isLoggedIn = false
+    //       this.$router.push('/articless')
+    //     })
+    // },
 
     
-  },
-  mounted(){
-  this.isLoggedIn = this.$cookies.isKey('auth-token')
-  }
+  // },
 }
 
 </script>

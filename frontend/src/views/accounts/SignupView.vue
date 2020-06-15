@@ -10,28 +10,28 @@
         <b-form-group class="mb-2" label="비밀번호 확인" label-for="password2" description="비밀번호를 다시 한번 작성해주세요">
             <b-form-input type="password" id="password2" v-model="signupData.password2"> </b-form-input>
         </b-form-group>
-        <b-button @click="signup" class="btn ">Sign Up</b-button>
+        <b-button @click="signup(signupData)" class="btn ">Sign Up</b-button>
     </div>
 </template>
 
 <script>
+import { mapActions } from "vuex"
 export default {
-    name: 'SignupView',
+    name: "SignupView",
     data() {
-        return{
-            signupData : {
-                username: null,
-                password1: null,
-                password2: null
-            }
+        return {
+        signupData: {
+            username: null,
+            password1: null,
+            password2: null
+        }
         }
     },
     methods: {
-        signup() {
-            this.$emit('submit-signup-data', this.signupData)
-        }
+        ...mapActions(["signup"])
     }
 }
+
 </script>
 
 <style>

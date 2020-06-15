@@ -7,27 +7,28 @@
         <b-form-group class="mb-2" label="비밀번호" label-for="password" >
             <b-form-input type="password" id="password" v-model="loginData.password" placeholder="비밀번호를 작성해주세요"> </b-form-input>
         </b-form-group>
-        <b-button @click="login" class="btn ">로그인</b-button>
+        <b-button @click="login(loginData)" class="btn ">로그인</b-button>
     </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-    name: 'LoginView',
+    name: "LoginView",
     data() {
         return {
             loginData: {
                 username: null,
-                password: null,
+                password: null
             }
         }
     },
     methods: {
-        login() {
-            this.$emit('submit-login-data', this.loginData)
-        }
+        ...mapActions(['login'])
     }
 }
+
 </script>
 
 <style scoped>
