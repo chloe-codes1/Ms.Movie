@@ -18,7 +18,7 @@ class ReviewListCreate(APIView):
         }
         serializer = ReviewListSerializer(reviews, many=True, context=context)
         return Response(serializer.data)
-        
+
     @permission_classes([IsAuthenticated])
     def post(self, request):
         serializer = ReviewSerializer(data=request.data)
