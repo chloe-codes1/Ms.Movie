@@ -54,8 +54,7 @@
 </template>
 
 <script>
-// const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
-const API_KEY = 'AIzaSyBYYRFUt67berVoGvBWv5OSVuj6h8VWkd4'
+const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
 const API_URL = 'https://www.googleapis.com/youtube/v3/search'
 
 import axios from 'axios'
