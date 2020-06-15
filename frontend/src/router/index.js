@@ -6,8 +6,7 @@ import Movies from '@/views/movies/Movies.vue'
 import SignupView from '@/views/accounts/SignupView.vue'
 import LoginView from '@/views/accounts/LoginView.vue'
 
-import ReviewListView from '@/views/reviews/ReviewListView.vue'
-import ReviewCreateView from '@/views/reviews/ReviewCreateView.vue'
+import ReviewListCreate from '@/views/reviews/ReviewListCreate.vue'
 import ReviewDetailView from '@/views/reviews/ReviewDetailView.vue'
 
 Vue.use(VueRouter)
@@ -23,7 +22,7 @@ Vue.use(VueRouter)
     name: 'Movies',
     component: Movies,
     meta: {
-      title: 'Ms.Movie | Movies'
+      title: 'Ms.Move | Movies'
     }
   },
   {
@@ -43,23 +42,16 @@ Vue.use(VueRouter)
     }
   },
   {
-    path: '/reviews',
-    name: 'ReviewListView',
-    component: ReviewListView,
+    path: '/reviews/:id',
+    name: 'ReviewListCreate',
+    component: ReviewListCreate,
     meta: {
       title: 'Ms.Movie | Reviews'
     }
   },
+  
   {
-    path: '/reviews/create',
-    name: 'ReviewCreateView',
-    component: ReviewCreateView,
-    meta: {
-      title: 'Ms.Movie | Write a review'
-    }
-  },
-  {
-    path: '/reviews/:id',
+    path: '/reviews/detail/:id',
     name: 'ReviewDetailView',
     component: ReviewDetailView
   },

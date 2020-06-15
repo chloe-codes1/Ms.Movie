@@ -36,6 +36,7 @@ class MovieAPI(APIView):
             url = f'{base_url}discover/movie?api_key={key}&sort_by=popularity.desc&include_video=false&page={page}'
             response = requests.get(url).json()
             data = response['results']
+            print('dho..', data)
             for i in range(20):
                 try:
                     genre_ids=data[i].get('genre_ids')

@@ -15,10 +15,11 @@ export default new Vuex.Store({
     authToken: cookies.get('auth-token'),
     movies: [],
     reviews: [],
+    id: null,
   },
   getters: {
     isLoggedIn: state => !!state.authToken,
-    config: state => ({headers: { Authorization: `Token ${state.authToken}` }})
+    config: state => ({headers: { Authorization: `Token ${state.authToken}` }}),
   },
   mutations:{
     SET_TOKEN(state, token){
@@ -31,7 +32,7 @@ export default new Vuex.Store({
 
     SET_REVIEWS(state, reviews){
       state.reviews = reviews
-    }
+    },
 
   },
   actions: {
@@ -75,11 +76,25 @@ export default new Vuex.Store({
         .then(response => commit('SET_MOVIES', response.data))
         .catch(err => console.log(err))
     },
-
-    getReviews( {commit} ) {
-      axios.get(SERVER.URL + SERVER.ROUTES.reviewList)
+ 
+    // ReviewList
+    getReviews({commit}, id) {
+      axios.get(SERVER.URL +`/reviews/${id}`)
         .then(response => commit('SET_REVIEWS', response.data))
         .catch(err => console.log(err))       
+    },
+    createReview( {getters}, id, reviewData ) {
+      axios.post(SERVER.URL + `reviews/${id}`, reviewData, getters.config)
+        .then(() => {
+          router.push(`/reviews/${id}`)
+        })
+        .catch(err => console.log(err))
+    },
+    // Detail
+    getReview( { commit }, info ) {
+      axios.get(SERVER.URL + SERVER.ROUTES.reviewDetail + info)
+        .then(response => commit('SET_REVIEWS', response.data))
+        .catch(err => console.log(err))
     },
 
   },
