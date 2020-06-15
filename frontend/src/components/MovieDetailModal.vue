@@ -27,7 +27,7 @@
 
           </div>
           <div class="modal-footer">
-            <button v-on:click="toggleHidden" class="btn mr-auto">
+            <button @click="toggleHidden" class="btn mr-auto">
                 <img class="play-btn" alt="queen" src="@/assets/video.png"> <span>Play Trailer</span>
             </button>
             <button  type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -35,10 +35,15 @@
         </div>
 
         <div v-if="!showTrailer" class="modal-content">
-
-
-
-           <Trailer />
+           <div class="modal-header">
+            <!-- <button @click="toggleHidden" type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> -->
+            <button @click="toggleHidden" type="button" class="close" data-dismiss="modal" aria-label="Close">
+              Back to detail
+            </button>
+           </div>
+           <Trailer :video="video" />
         
         </div>
       
@@ -49,6 +54,10 @@
 </template>
 
 <script>
+const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
+const API_URL = 'https://www.googleapis.com/youtube/v3/search'
+
+import axios from 'axios'
 import Trailer from '@/components/Trailer.vue'
 
 export default {
@@ -57,14 +66,37 @@ export default {
     return {
     showContent: false,
     showTrailer: true,
+    inputValue: '',
+    video: null,
     }
-  
   },
   methods: {
     toggleHidden(){
       this.showContent = !this.showContent
       this.showTrailer = !this.showTrailer
-    }
+      this.getTrailer(this.movie.title)
+    },
+    getTrailer(movieTitle){
+          console.log('하하하 왜안되는거야아', API_KEY)
+            this.inputValue = movieTitle + 'trailer'
+            axios.get(API_URL, {
+                params: {
+                    key: API_KEY,
+                    part: 'snippet',
+                    type: 'video',
+                    q: this.inputValue
+                }
+            })
+            .then(res => {
+                res.data.items.forEach(item => {
+                    const parser = new DOMParser()
+                    const doc = parser.parseFromString(item.snippet.title, 'text/html')
+                    item.snippet.title = doc.body.innerText
+                })
+                this.video = res.data.items[0]
+            })
+            .catch(err => console.error(err))
+        },
   },
   components:{
     Trailer
