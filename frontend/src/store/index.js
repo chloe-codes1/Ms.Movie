@@ -26,7 +26,7 @@ export default new Vuex.Store({
     },
     SET_MOVIES(state, movies){
       state.movies = movies
-    }
+    },
   },
   actions: {
     postAuthData({ commit }, info){
@@ -68,7 +68,7 @@ export default new Vuex.Store({
       axios.get( SERVER.URL + SERVER.ROUTES.movieList)
         .then(response => commit('SET_MOVIES', response.data))
         .catch(err => console.log(err))
-    }
+    },
   },
   modules: {
   }
