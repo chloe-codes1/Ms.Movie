@@ -49,7 +49,6 @@ Vue.use(VueRouter)
       title: 'Ms.Movie | Reviews'
     }
   },
-  
   {
     path: '/reviews/detail/:id',
     name: 'ReviewDetailView',

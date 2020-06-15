@@ -83,10 +83,12 @@ export default new Vuex.Store({
         .then(response => commit('SET_REVIEWS', response.data))
         .catch(err => console.log(err))       
     },
-    createReview( {getters}, id, reviewData ) {
-      axios.post(SERVER.URL + `reviews/${id}`, reviewData, getters.config)
+    createReview( {getters}, reviewData) {
+      
+      console.log(reviewData)
+      axios.post(SERVER.URL + `reviews/`, reviewData, getters.config)
         .then(() => {
-          router.push(`/reviews/${id}`)
+          router.push(`/reviews/`)
         })
         .catch(err => console.log(err))
     },

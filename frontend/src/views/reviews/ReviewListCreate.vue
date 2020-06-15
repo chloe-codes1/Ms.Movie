@@ -1,7 +1,6 @@
 <template>
     <div>
         
-        <ReviewCreate @create="createReview"/>
         
         <ReviewList :reviews="reviews"/>
         
@@ -10,7 +9,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import ReviewCreate from '@/components/ReviewCreate.vue'
+// import ReviewCreate from '@/components/ReviewCreate.vue'
 import ReviewList from '@/components/ReviewList.vue'
 export default {
     name: 'ReviewListCreate',
@@ -20,7 +19,6 @@ export default {
         }
     },
     components: {
-        ReviewCreate,
         ReviewList
     },
     computed: {
@@ -29,7 +27,6 @@ export default {
     },
     methods: {
         ...mapActions(['getReviews']),
-        ...mapActions(['createReview'])
     },
     created() {
         this.getReviews(this.id)

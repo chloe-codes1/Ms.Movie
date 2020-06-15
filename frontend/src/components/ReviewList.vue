@@ -1,18 +1,25 @@
 <template>
 <div id="review_list">
-    <h1>Review For {{  }}</h1>
-    <router-link to="/reviews/:id"><b-button>리뷰 작성</b-button></router-link>
+    <h1>Review List</h1>
+    <ReviewCreate/>
     <b-table hover :items="reviews"></b-table>
 </div>
 </template>
 
 <script>
+import ReviewCreate from '@/components/ReviewCreate.vue'
 export default {
     name: 'ReviewList',
     props: ['reviews'],
-    methods: {
-        
+    components: {
+        ReviewCreate,
     },
+    methods: {
+        createVue() {
+            
+        }
+
+    }
 }
 </script>
 
