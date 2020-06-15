@@ -7,12 +7,12 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .serializers import ReviewSerializer, ReviewDetailSerializer, ReviewListSerializer, CommentSerializer, ReportSerializer
 from .models import Review, Comment, Report
-from ..movies.models import Movie
+from movies.models import Movie
 
 class ReviewListCreate(APIView):
     def get(self, request, movie_pk):
         movie = get_object_or_404(Movie, id=movie_pk)
-        reviews = movie.reviews
+        reviews = movie.review_set
         context = { 
             "request":request
         }
@@ -20,11 +20,17 @@ class ReviewListCreate(APIView):
         return Response(serializer.data)
 
     @permission_classes([IsAuthenticated])
-    def post(self, request):
-        serializer = ReviewSerializer(data=request.data)
+    def post(self, request, movie_pk):
+        movie = get_object_or_404(Movie, id=movie_pk)
+        user = request.user
+        context = { 
+            "request":request
+        }
+        serializer = ReviewSerializer(data=request.data, context=context)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
-            return Response(serializer.data)
+            review = serializer.save(user=user, movie=movie)
+            if review:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
       
