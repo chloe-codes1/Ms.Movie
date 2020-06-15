@@ -4,8 +4,10 @@ from django.contrib.auth import settings
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 
+from ..movies.models import Movie
 
 class Review(models.Model):
+    movie = models.ForeignKey(Movie, related_name="reviews", on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     content = models.TextField()
     rating = models.IntegerField(null=True)

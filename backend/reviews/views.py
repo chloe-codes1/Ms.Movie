@@ -7,13 +7,18 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .serializers import ReviewSerializer, ReviewDetailSerializer, ReviewListSerializer, CommentSerializer, ReportSerializer
 from .models import Review, Comment, Report
-
+from ..movies.models import Movie
 
 class ReviewListCreate(APIView):
-    def get(self, request):
-        reviews = Review.objects.all()
-        serializer = ReviewListSerializer(reviews, many=True)
+    def get(self, request, movie_pk):
+        movie = get_object_or_404(Movie, id=movie_pk)
+        reviews = movie.reviews
+        context = { 
+            "request":request
+        }
+        serializer = ReviewListSerializer(reviews, many=True, context=context)
         return Response(serializer.data)
+        
     @permission_classes([IsAuthenticated])
     def post(self, request):
         serializer = ReviewSerializer(data=request.data)
