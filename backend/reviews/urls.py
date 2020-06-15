@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+app_name='reviews'
+
 urlpatterns = [
     path('<int:movie_pk>/', views.ReviewListCreate.as_view()),
     path('<int:review_pk>/', views.ReviewDetail.as_view()),
