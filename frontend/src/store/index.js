@@ -28,9 +28,11 @@ export default new Vuex.Store({
     SET_MOVIES(state, movies){
       state.movies = movies
     },
+
     SET_REVIEWS(state, reviews){
       state.reviews = reviews
     }
+
   },
   actions: {
     postAuthData({ commit }, info){
@@ -73,11 +75,13 @@ export default new Vuex.Store({
         .then(response => commit('SET_MOVIES', response.data))
         .catch(err => console.log(err))
     },
+
     getReviews( {commit} ) {
       axios.get(SERVER.URL + SERVER.ROUTES.reviewList)
         .then(response => commit('SET_REVIEWS', response.data))
         .catch(err => console.log(err))       
     },
+
   },
   modules: {
   }
