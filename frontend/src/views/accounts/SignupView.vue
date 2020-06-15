@@ -1,6 +1,6 @@
 <template>
     <div id="signup">
-        <h1>회원가입</h1>
+        <h1>Sign Up</h1>
         <b-form-group class="mb-2" label="아이디" label-for="username" description="아이디를 작성해주세요">
             <b-form-input type="text" id="username" v-model="signupData.username"> </b-form-input>
         </b-form-group>
@@ -10,7 +10,7 @@
         <b-form-group class="mb-2" label="비밀번호 확인" label-for="password2" description="비밀번호를 다시 한번 작성해주세요">
             <b-form-input type="password" id="password2" v-model="signupData.password2"> </b-form-input>
         </b-form-group>
-        <b-button @click="signup" class="btn ">회원가입</b-button>
+        <b-button @click="signup" class="btn ">Sign Up</b-button>
     </div>
 </template>
 
