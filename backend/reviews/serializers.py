@@ -7,12 +7,11 @@ from movies.serializers import MovieSerializer
 class ReviewSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=False)
     created_at = serializers.DateTimeField(required=False)
-    movie_title = serializers.CharField(source="movie.title")
     
     class Meta:
         model = Review
-        fields = ('id', 'title', 'content', 'user', 'created_at', 'updated_at', 'rating', 'movie', 'movie_title')
-        read_only_fields = ('id', 'user', 'created_at', 'updated_at', 'movie', 'movie_title')
+        fields = ('id', 'title', 'content', 'user', 'created_at', 'updated_at', 'rating', 'movie',)
+        read_only_fields = ('id', 'user', 'created_at', 'updated_at', 'movie',)
 
 
 class ReviewListSerializer(serializers.ModelSerializer):
@@ -26,6 +25,7 @@ class ReviewListSerializer(serializers.ModelSerializer):
 class ReviewDetailSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField()
     user = serializers.CharField(source="user.username")
+    movie_title = serializers.CharField(source="movie.title")
     class Meta:
         model = Review
         fields = '__all__'

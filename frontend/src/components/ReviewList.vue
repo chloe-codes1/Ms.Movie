@@ -26,6 +26,11 @@
 export default {
     name: 'ReviewList',
     props: ['reviews'],
+    data() {
+        return {
+            id: this.$route.params.id
+        }
+    },
 
     components: {
         
