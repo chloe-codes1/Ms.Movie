@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 from .serializers import MovieSerializer
-from .models import Movie, Country, Cast
+from .models import Movie, Country, Cast, Genre
 
 import requests
 
@@ -31,11 +31,11 @@ class MovieAPI(APIView):
     def post(self, request, format=None):
         key = settings.TMDB_API_KEY
         base_url = 'https://api.themoviedb.org/3/'
-
-        for page in range(1,5): # Change it to 501 on deployment!
+        for page in range(1,10): # Change it to 501 on deployment!
             url = f'{base_url}discover/movie?api_key={key}&sort_by=popularity.desc&include_video=false&page={page}'
             response = requests.get(url).json()
             data = response['results']
+            print('url', url)
             for i in range(20):
                 try:
                     genre_ids=data[i].get('genre_ids')
@@ -43,19 +43,35 @@ class MovieAPI(APIView):
 
                     if Movie.objects.filter(tmdb_id=tmdb_id):
                         continue
+
+                    genres = []
+
+                    for genre_id in genre_ids:
+                        new_genre = str(API.get_genres(genre_id))
+                        try:
+                            g = Genre.objects.get(name=new_genre)
+                        except Genre.DoesNotExist:
+                            g = Genre.objects.create(name=new_genre)
+                        genres.append(g)                   
                     
                     detail_url = f'{base_url}movie/{tmdb_id}?api_key={key}&append_to_response=credits'
+                    
                     detail_response = requests.get(detail_url).json()
-                   
+
                     countries = []
-                    
-                    for country in detail_response.get('production_countries'):
-                        try:
-                            c = Country.objects.get(name=country.get('name'))
-                        except Country.DoesNotExist:
-                            c = Country.objects.create(name=country.get('name'))
-                        countries.append(c)
-                    
+
+                    try:
+                        for country in detail_response.get('production_countries'):
+                            try:
+                                c = Country.objects.get(name=country.get('name'))
+                            except Country.DoesNotExist:
+                                c = Country.objects.create(name=country.get('name'))
+                            countries.append(c)
+                    except TypeError:
+                        print('typeerror',detail_url )
+                        continue
+
+
                     casts = []
 
                     for cast in detail_response.get('credits').get('cast')[:5]:
@@ -93,18 +109,22 @@ class MovieAPI(APIView):
                             release_date=detail_response.get('release_date'),
                             tagline=detail_response.get('tagline'),
                             runtime=detail_response.get('runtime'),
-                            genres=list( str(API.get_genres(tmdb_id)) for tmdb_id in genre_ids),
+                            # genres=list( str(API.get_genres(tmdb_id)) for tmdb_id in genre_ids),
                             tmdb_id=tmdb_id,
                         )
                     
                     new_movie.countries.add(*countries)
                     new_movie.casts.add(*casts)
+                    new_movie.genres.add(*genres)
+                    
                 except IndexError:
                     break
                 except IntegrityError:
                     continue
                 except AttributeError:
                     continue
+           
+                    
         
         return Response(status=status.HTTP_201_CREATED)
 
