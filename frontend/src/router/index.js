@@ -9,7 +9,7 @@ import LogoutView from '@/views/accounts/LogoutView.vue'
 
 import ReviewListCreate from '@/views/reviews/ReviewListCreate.vue'
 import ReviewDetailView from '@/views/reviews/ReviewDetailView.vue'
-
+import ReviewCreate from '@/views/reviews/ReviewCreate.vue'
 Vue.use(VueRouter)
 
   const routes = [
@@ -51,6 +51,14 @@ Vue.use(VueRouter)
     path: '/reviews/:id',
     name: 'ReviewListCreate',
     component: ReviewListCreate,
+    meta: {
+      title: 'Ms.Movie | Reviews'
+    }
+  },
+  {
+    path: '/reviews/:id/create',
+    name: 'ReviewCreate',
+    component: ReviewCreate,
     meta: {
       title: 'Ms.Movie | Reviews'
     }
