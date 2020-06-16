@@ -19,7 +19,6 @@ export default new Vuex.Store({
   mutations:{ 
     SET_TOKEN(state, token){
       state.authToken = token
-      console.log('abc', token)
       cookies.set('auth-token', token) 
     }, 
     SET_MOVIES(state, movies){
