@@ -27,10 +27,13 @@
 
           </div>
           <div class="modal-footer">
-            <button @click="toggleHidden" class="btn mr-auto">
+            <button @click="toggleHidden" class="btn">
                 <img class="play-btn" alt="queen" src="@/assets/video.png"> <span>Play Trailer</span>
             </button>
-            <button @click="writeReview" @click.self="$emit('close')" type="button" class="close" data-dismiss="modal" aria-label="Close">  
+            <button @click="showReviews" data-dismiss="modal" class="btn mr-auto">
+              Reviews
+            </button>
+            <button @click="writeReview" data-dismiss="modal" class="btn btn-warning review-creation-btn ">  
               Write a review  
             </button  >
             <button  type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -39,17 +42,12 @@
 
         <div v-if="!showTrailer" class="modal-content">
            <div class="modal-header">
-            <!-- <button @click="toggleHidden" type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button> -->
             <button @click="toggleHidden" type="button" class="close" data-dismiss="modal" aria-label="Close">
               Back to detail
             </button>
            </div>
            <Trailer :video="video" />
-        
         </div>
-      
       </div>
     </div>
 
@@ -80,7 +78,6 @@ export default {
       this.getTrailer(this.movie.title)
     },
     getTrailer(movieTitle){
-          console.log('하하하 왜안되는거야아', API_KEY)
             this.inputValue = movieTitle + 'trailer'
             axios.get(API_URL, {
                 params: {
@@ -101,8 +98,12 @@ export default {
             .catch(err => console.error(err))
         },
     writeReview() {
+      this.$router.push(`/reviews/${this.movie.id}/create`)
+    },
+    showReviews(){
       this.$router.push(`/reviews/${this.movie.id}`)
-    } 
+    },
+
   },
   components:{
     Trailer
@@ -140,5 +141,9 @@ export default {
 
 .play-btn{
     width: 30px;
+}
+
+.review-creation-btn{
+    opacity: 0.8;
 }
 </style>

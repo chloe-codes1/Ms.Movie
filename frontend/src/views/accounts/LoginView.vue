@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions } from 'vuex'
 
 export default {
     name: "LoginView",
@@ -25,8 +25,8 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['login']),
-    },
+        ...mapActions(['login'])
+    }
 }
 
 </script>
