@@ -1,9 +1,7 @@
 <template>
     <div>
-        
-        
+        <b-button><router-link :to="'/reviews/' + id + '/create'">New</router-link></b-button>
         <ReviewList :reviews="reviews"/>
-        
     </div>
 </template>
 
