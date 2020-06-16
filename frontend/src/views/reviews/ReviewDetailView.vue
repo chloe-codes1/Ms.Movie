@@ -1,32 +1,17 @@
 <template>
     <div>
-        <p>{{reviews}}</p>
+       <ReviewDetail/>
     </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-
+import ReviewDetail from '@/components/ReviewDetail.vue'
 export default {
     name: 'ReviewDetailView',
-    data() {
-        return {
-            id: this.$route.params.id,
-            
-        }
-    },
-    computed: {
-        ...mapState(['reviews'])
-
-    },
-    methods: {
-        ...mapActions(['getReview'])
-
-    },
-        
-    created() {
-        this.getReview(this.id)
+    components: {
+        ReviewDetail
     }
+
 }
 </script>
 

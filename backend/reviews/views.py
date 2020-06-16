@@ -12,7 +12,7 @@ from movies.models import Movie
 class ReviewListCreate(APIView):
     def get(self, request, movie_pk):
         movie = get_object_or_404(Movie, id=movie_pk)
-        reviews = movie.review_set
+        reviews = movie.review_set.order_by('-pk')
         context = { 
             "request":request
         }

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import Movies from '@/views/movies/Movies.vue'
+import Cast from '@/views/movies/Cast.vue'
 
 import SignupView from '@/views/accounts/SignupView.vue'
 import LoginView from '@/views/accounts/LoginView.vue'
@@ -23,7 +24,15 @@ Vue.use(VueRouter)
     name: 'Movies',
     component: Movies,
     meta: {
-      title: 'Ms.Move | Movies'
+      title: 'Ms.Movie | Movies'
+    }
+  },
+  {
+    path: '/cast/:name',
+    name: 'Cast',
+    component: Cast,
+    meta: {
+      title: 'Ms.Movie | Cast'
     }
   },
   {
@@ -60,15 +69,14 @@ Vue.use(VueRouter)
     name: 'ReviewCreate',
     component: ReviewCreate,
     meta: {
-      title: 'Ms.Movie | Reviews'
+      title: 'Ms.Movie | Write a review'
     }
   },
   {
     path: '/reviews/detail/:id',
     name: 'ReviewDetailView',
-    component: ReviewDetailView
+    component: ReviewDetailView,
   },
-
 ]
 
 const router = new VueRouter({
@@ -77,6 +85,7 @@ const router = new VueRouter({
   routes
 })
 
+// title 설정하기 ^^
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title || 'Ms. Movie';
   next()

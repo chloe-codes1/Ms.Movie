@@ -27,12 +27,15 @@
 
           </div>
           <div class="modal-footer">
-            <button @click="toggleHidden" class="btn mr-auto">
-                <img class="play-btn" alt="queen" src="@/assets/video.png"/> <span>Play Trailer</span>
+            <button @click="toggleHidden" class="btn">
+                <img class="play-btn" alt="queen" src="@/assets/video.png"> <span>Play Trailer</span>
             </button>
-            <button @click="writeReview" class="btn mr-auto close" data-dismiss="modal">  
-                <img class="review-btn" src="@/assets/pencil.png" alt="review"/><span>Write a review</span>  
-            </button >
+            <button @click="showReviews" data-dismiss="modal" class="btn mr-auto">
+              Reviews
+            </button>
+            <button @click="writeReview" data-dismiss="modal" class="btn btn-warning review-creation-btn ">  
+              Write a review  
+            </button  >
             <button  type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
@@ -94,8 +97,12 @@ export default {
             .catch(err => console.error(err))
         },
     writeReview() {
+      this.$router.push(`/reviews/${this.movie.id}/create`)
+    },
+    showReviews(){
       this.$router.push(`/reviews/${this.movie.id}`)
-    } 
+    },
+
   },
   components:{
     Trailer
@@ -133,5 +140,9 @@ export default {
 
 .play-btn, .review-btn{
     width: 30px;
+}
+
+.review-creation-btn{
+    opacity: 0.8;
 }
 </style>
