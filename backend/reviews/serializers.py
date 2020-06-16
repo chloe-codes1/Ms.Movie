@@ -5,7 +5,8 @@ from movies.serializers import MovieSerializer
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    updated_at = serializers.DateTimeField(required=False)
+    updated_at = serializers.DateTimeField(required=False, format="%Y-%m-%d")
+    user = serializers.CharField(required=False, source="user.username")
     class Meta:
         model = Comment
         fields = ('id', 'content', 'user', 'updated_at',)
