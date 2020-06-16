@@ -1,15 +1,12 @@
 <template>
     <div>
-        
-        <b-button><router-link to=`/reviews/${id}/create`>New</router-link></b-button>
-        <ReviewList :reviews="reviews"/>
-        
+        <ReviewList :reviews="reviews"/>       
     </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
-// import ReviewCreate from '@/components/ReviewCreate.vue'
+// import ReviewCreate from '@/views/ReviewCreate.vue'
 import ReviewList from '@/components/ReviewList.vue'
 export default {
     name: 'ReviewListCreate',
@@ -19,7 +16,8 @@ export default {
         }
     },
     components: {
-        ReviewList
+        ReviewList,
+        
     },
     computed: {
         ...mapState(['reviews'])
