@@ -99,8 +99,8 @@ def dislike(request, review_pk):
   
 class CommentCreate(APIView):
     @permission_classes([IsAuthenticated])
-    def post(self, request, pk):
-        review = get_object_or_404(Review, pk=pk)
+    def post(self, request, review_pk):
+        review = get_object_or_404(Review, pk=review_pk)
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user, review=review)
@@ -113,8 +113,8 @@ class CommentDetail(APIView):
         return get_object_or_404(Comment, pk=pk)
 
     @permission_classes([IsAuthenticated])
-    def put(self, request, pk):
-        comment = self.get_comment(pk)
+    def put(self, request, review_pk, comment_pk):
+        comment = self.get_comment(comment_pk)
         if comment.user == request.user:
             serializer = CommentSerializer(comment, data=request.data)
             if serializer.is_valid(raise_exception=True):
@@ -126,8 +126,8 @@ class CommentDetail(APIView):
 
           
     @permission_classes([IsAuthenticated])
-    def delete(self, request, pk):
-        comment = self.get_comment(pk)
+    def delete(self, request, review_pk, comment_pk):
+        comment = self.get_comment(comment_pk)
         if comment.user == request.user:
             comment.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)

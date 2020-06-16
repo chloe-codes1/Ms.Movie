@@ -1,7 +1,6 @@
 <template>
 <div id="review-list">
     <h1>Review List</h1>
-    <b-button><router-link :to="'/reviews/' + id + '/create'">New</router-link></b-button>
     <table class="table table-hover table-sm">
         <thead>
             <tr>
@@ -18,6 +17,7 @@
             </tr>
         </tbody>
     </table>
+    <b-button><router-link :to="'/reviews/' + id + '/create'">New</router-link></b-button>
 </div>
 </template>
 
@@ -25,7 +25,7 @@
 
 export default {
     name: 'ReviewList',
-    props: ['reviews'],
+    props: ['reviews',],
     data() {
         return {
             id: this.$route.params.id
@@ -53,5 +53,8 @@ thead {
 #review-list {
     width: 75%;
     margin: 0 auto;
+}
+b-button {
+
 }
 </style>

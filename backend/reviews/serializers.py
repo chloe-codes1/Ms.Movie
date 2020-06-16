@@ -3,6 +3,14 @@ from .models import Review, Comment, Report, REPORT_REASON
 from accounts.serializers import UserSerializer
 from movies.serializers import MovieSerializer
 
+
+class CommentSerializer(serializers.ModelSerializer):
+    updated_at = serializers.DateTimeField(required=False)
+    class Meta:
+        model = Comment
+        fields = ('id', 'content', 'user', 'updated_at',)
+        read_only_fields = ('id', 'user', 'updated_at',)
+
 # create
 class ReviewSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=False)
@@ -24,8 +32,10 @@ class ReviewListSerializer(serializers.ModelSerializer):
 
 class ReviewDetailSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField()
+    updated_at = serializers.DateTimeField(format="%Y-%m-%d")
     user = serializers.CharField(source="user.username")
     movie_title = serializers.CharField(source="movie.title")
+    comment_set = CommentSerializer(many=True, read_only=True)
     class Meta:
         model = Review
         fields = '__all__'
@@ -39,13 +49,3 @@ class ReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Report
         fields = '__all__'
-
-
-
-class CommentSerializer(serializers.ModelSerializer):
-    updated_at = serializers.DateTimeField(required=False)
-    class Meta:
-        model = Comment
-        fields = ('id', 'content', 'user', 'updated_at',)
-        read_only_fields = ('id', 'user', 'updated_at',)
-
