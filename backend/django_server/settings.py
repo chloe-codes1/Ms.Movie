@@ -174,6 +174,12 @@ REST_FRAMEWORK = {
     ]
 }
 
+# Token key랑 user id 같이 들고 온다...
+REST_AUTH_SERIALIZERS = {
+    'TOKEN_SERIALIZER': 'accounts.serializers.TokenSerializer',
+}
+
+
 # DRF auth가 JWT를 사용하게 하는 설정
 # REST_USE_JWT = True
 
