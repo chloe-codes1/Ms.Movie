@@ -26,10 +26,12 @@ class Movie(models.Model):
 class Cast(models.Model):
     movie = models.ManyToManyField(Movie, related_name='casts', blank=True)
     name = models.CharField(max_length=200)
+    biography=models.TextField()
     department = models.CharField(max_length=100)
     gender = models.IntegerField()
     birthday = models.DateField()
     profile = models.URLField(max_length=200)
+    place_of_birth = models.CharField(max_length=255)
     cast_id = models.IntegerField(unique=True)
 
     def __str__(self):

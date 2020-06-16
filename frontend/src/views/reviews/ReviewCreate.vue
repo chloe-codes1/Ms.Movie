@@ -33,7 +33,6 @@
 import { mapActions } from 'vuex'
 export default {
     name: 'ReviewCreate',
-    props: ['review'],
     data() {
         return {
             reviewData: {

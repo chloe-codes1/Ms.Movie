@@ -28,7 +28,7 @@ Vue.use(VueRouter)
     }
   },
   {
-    path: '/cast/:name',
+    path: '/cast',
     name: 'Cast',
     component: Cast,
     meta: {
