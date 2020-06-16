@@ -28,31 +28,25 @@
           </div>
           <div class="modal-footer">
             <button @click="toggleHidden" class="btn mr-auto">
-                <img class="play-btn" alt="queen" src="@/assets/video.png"> <span>Play Trailer</span>
+                <img class="play-btn" alt="queen" src="@/assets/video.png"/> <span>Play Trailer</span>
             </button>
-            <button @click="writeReview" @click.self="$emit('close')" type="button" class="close" data-dismiss="modal" aria-label="Close">  
-              Write a review  
-            </button  >
+            <button @click="writeReview" class="btn mr-auto close" data-dismiss="modal">  
+                <img class="review-btn" src="@/assets/pencil.png" alt="review"/><span>Write a review</span>  
+            </button >
             <button  type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
 
         <div v-if="!showTrailer" class="modal-content">
            <div class="modal-header">
-            <!-- <button @click="toggleHidden" type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button> -->
             <button @click="toggleHidden" type="button" class="close" data-dismiss="modal" aria-label="Close">
               Back to detail
             </button>
            </div>
            <Trailer :video="video" />
-        
         </div>
-      
       </div>
     </div>
-
   </div>
 </template>
 
@@ -80,7 +74,6 @@ export default {
       this.getTrailer(this.movie.title)
     },
     getTrailer(movieTitle){
-          console.log('하하하 왜안되는거야아', API_KEY)
             this.inputValue = movieTitle + 'trailer'
             axios.get(API_URL, {
                 params: {
@@ -138,7 +131,7 @@ export default {
   font-style: italic;
 }
 
-.play-btn{
+.play-btn, .review-btn{
     width: 30px;
 }
 </style>
