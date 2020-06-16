@@ -88,18 +88,27 @@ export default new Vuex.Store({
       console.log(cookies.get('auth-token'));
       console.log(getters.config) 
       axios.post(SERVER.URL + `/reviews/${data.id}/`, data.reviewData, getters.config)
-        .then(res => {
-          console.log(res)
-          history.go(0)
+        .then(() => {
+          router.push(`/reviews/${data.id}/`)
         })
         .catch(err => console.log(err))
     },
     // Detail
     getReview( { commit }, info ) {
-      axios.get(SERVER.URL + SERVER.ROUTES.reviewDetail + info)
+      axios.get(SERVER.URL + `/reviews/detail/` + info)
         .then(response => commit('SET_REVIEWS', response.data))
         .catch(err => console.log(err))
     },
+    // get Comment list
+
+
+    // Comment Create
+    createComment( {getters}, data ) {
+      axios.post(SERVER.URL + `/reviews/${data.id}/comments/`, data.commentData, getters.config)
+      .then(() => {
+        router.history.go(0)
+      })
+    }
   },
   modules: {
   }

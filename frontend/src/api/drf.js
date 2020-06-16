@@ -8,6 +8,7 @@ export default{
         movieList: '/movies/',
         movieDetail: '/movies/:id',
         reviewList: '/reviews/:id/',
-        reviewDetail: '/reviews/detail/',
+        reviewDetail: '/reviews/detail/:id',
+        commentCreate: 'reviews/:id/comments/',
     }
 }
