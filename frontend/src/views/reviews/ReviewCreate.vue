@@ -6,17 +6,23 @@
             <b-form-input type="text" id="title" v-model="reviewData.title"> </b-form-input>
         </b-form-group>
         <!-- rating -->
-        <label for="rating">Rating:</label>
-        <b-form-rating id="rating" inline v-model="reviewData.rating" variant="warning" class="mb-2" stars="10"></b-form-rating>
-        value: {{reviewData.rating}}
+        <b-input-group class="mb-2">
+            <b-input-group-prepend><b-button>Rating</b-button>   
+            </b-input-group-prepend>
+            <b-form-rating v-model="reviewData.rating" stars="10" variant="warning"></b-form-rating>
+            <b-input-group-append>
+                <b-input-group-text class="justify-content-center" style="min-width: 3em;">
+                {{ reviewData.rating }}
+                </b-input-group-text>
+            </b-input-group-append>
+        </b-input-group>
+        
         <!-- content -->
         <b-form-group class="mb-2" label="Content" label-for="content">
             <b-form-textarea
             id="content"
             v-model="reviewData.content"
             placeholder="Write your review content"
-            rows="3"
-            max-rows="6"
             ></b-form-textarea>
         </b-form-group>
         <b-button @click="onWrite">Submit</b-button> 
@@ -27,6 +33,7 @@
 import { mapActions } from 'vuex'
 export default {
     name: 'ReviewCreate',
+    props: ['review'],
     data() {
         return {
             reviewData: {
@@ -48,7 +55,15 @@ export default {
 
 <style>
 #create {
-    width: 50%;
+    width: 75%;
 }
-
+b-form-group {
+    text-align: left;
+}
+#content {
+    height: 300px;
+}
+#rating {
+    width: 75%;
+}
 </style>
