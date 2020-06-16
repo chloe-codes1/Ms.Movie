@@ -6,6 +6,7 @@ export default{
         login: '/rest-auth/login/',
         logout: '/rest-auth/logout/',
         movieList: '/movies/',
+        movieDetail: '/movies/:id',
         reviewList: '/reviews/:id/',
         reviewDetail: '/reviews/detail/',
     }

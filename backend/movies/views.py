@@ -36,7 +36,6 @@ class MovieAPI(APIView):
             url = f'{base_url}discover/movie?api_key={key}&sort_by=popularity.desc&include_video=false&page={page}'
             response = requests.get(url).json()
             data = response['results']
-            print('dho..', data)
             for i in range(20):
                 try:
                     genre_ids=data[i].get('genre_ids')
@@ -72,10 +71,12 @@ class MovieAPI(APIView):
 
                                 c = Cast.objects.create(
                                         name = cast_response.get('name'),
+                                        biography = cast_response.get('biography'),
                                         department = cast_response.get('known_for_department'),
                                         gender = cast_response.get('gender'),
                                         birthday = cast_response.get('birthday'),
                                         profile = cast_response.get('profile_path'),
+                                        place_of_birth = cast_response.get('place_of_birth'),
                                         cast_id = cast_id
                                 )
                             else:

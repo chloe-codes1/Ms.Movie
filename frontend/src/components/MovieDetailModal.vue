@@ -22,7 +22,19 @@
             <p><span class="mx-2">{{movie.release_date}}</span>  | <span class="mx-2"> {{movie.runtime}} mins </span> | <span class="mx-2" v-for="(country,index) in movie.countries" :key="index"> {{country}}</span> </p>
             <p>Genres: <span class="ml-2 text-secondary" v-for="(genre, index) in movie.genres" :key="index">{{genre}}</span></p>
             
-            <p>Starring: <span class="badge badge-success mx-2" v-for="(cast,index) in movie.casts" :key="index"> {{cast.name}}</span> </p>
+            <p>Starring: 
+                <span class="badge badge-success mx-2" v-for="(cast,index) in movie.casts" :key="index" data-dismiss="modal">
+                  <router-link :to="{
+                    name: 'Cast',
+                    params: {
+                      item: cast
+                    }
+                  }"
+                  class="text-white text-decoration-none">
+                      {{cast.name}}
+                  </router-link>  
+                </span> 
+            </p>
             <div>{{movie.content}}</div>
 
           </div>

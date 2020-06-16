@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     authToken: cookies.get('auth-token'),
     movies: [],
+    starredMovie: null,
     reviews: [],
     id: null,
   },
@@ -23,6 +24,9 @@ export default new Vuex.Store({
     }, 
     SET_MOVIES(state, movies){
       state.movies = movies
+    },
+    SET_MOVIE(state, movie){
+      state.starredMovie = movie
     },
     SET_REVIEWS(state, reviews){
       state.reviews = reviews
@@ -69,6 +73,10 @@ export default new Vuex.Store({
       axios.get( SERVER.URL + SERVER.ROUTES.movieList)
         .then(response => commit('SET_MOVIES', response.data))
         .catch(err => console.log(err))
+    },
+    fetchMovie({ commit }, id){
+      axios.get(SERVER.URL + SERVER.ROUTES.movieList + id)
+        .then(response => commit('SET_MOVIE',response.data))
     },
     // ReviewList
     getReviews({commit}, id) {
