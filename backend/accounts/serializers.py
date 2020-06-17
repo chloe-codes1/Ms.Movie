@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
-
 from .models import UserProfile
+# from reviews.serializers import ReviewDetailSerializer
 
 User = get_user_model()
 
@@ -10,10 +10,12 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     favorite = serializers.CharField(source='userprofile.favorite')
+    # review_set = ReviewDetailSerializer(many=True, read_only=True)                                                                                                         
+
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'username', 'password', 'favorite')
-
+        # fields = ('first_name', 'last_name', 'email', 'username', 'password', 'favorite','review_set')
 
     def create(self, validated_data, instance=None):
         print('create called!!')

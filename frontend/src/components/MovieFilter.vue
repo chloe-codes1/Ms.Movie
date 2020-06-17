@@ -125,5 +125,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+ul > li > a{
+  color:#3fb883;
+}
+
 </style>

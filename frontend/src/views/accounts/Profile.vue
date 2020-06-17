@@ -1,15 +1,14 @@
 <template>
   <div>
-    <h1> 여긴 프로파일 페이지~~~ 하하하~~</h1>
-    <b-avatar variant="warning"></b-avatar>
+    <b-avatar></b-avatar>
     <div v-if="account">
-      <p> 아이디: {{account.username}}</p>
-      <p> 장르: {{account.favorites}}</p>
+      <p> Username: {{account.username}}</p>
+      <p> Genre: {{account.favorites}}</p>
     </div>
     <div v-if="othersAccount">
-       <p> 아이디: {{othersAccount.username}}</p>
-      <p> 장르: {{othersAccount.favorite}}</p>
-    </div>
+      <p> Username: {{othersAccount.username}}</p>
+      <p> Genre: {{othersAccount.favorite}}</p>
+    </div>                                                                                                                                                                                                                                                                                                                                                                                                                                         
   </div>
 </template>
 

@@ -8,13 +8,13 @@
     />
     <div class="right-side mt-3">
       <div v-if="selectedGenre">
-        <h3 class="text-left">{{selectedGenre}} movies</h3>
+        <h4 class="text-left">{{selectedGenre}} movies</h4>
       </div>
       <div v-else-if="selectedOrder">
-        <h3 class="text-left">{{selectedOrder}} movies</h3>
+        <h4 class="text-left">{{selectedOrder}} movies</h4>
       </div>
       <div v-else-if="keyword">
-        <h3 class="text-left">Search result for movie title contains "{{keyword}}"</h3>
+        <h4 class="text-left">Search result for movie title contains "{{keyword}}"</h4>
       </div>
       <div class="row">
         <MovieItem v-for="movie in movies" :key="movie.id" :movie="movie" />
@@ -56,6 +56,8 @@ export default {
           genre: value
         }
       });
+      this.selectedOrder= null;
+      this.keyword= null;
     },
     sortOrder(value) {
       this.selectedOrder = value;
@@ -64,6 +66,8 @@ export default {
           order_by: value
         }
       });
+      this.selectedGenre= null;
+      this.keyword= null;
     },
     searchMovie(value){
       this.keyword = value;
@@ -71,7 +75,9 @@ export default {
         params:{
           keyword: value
         }
-      })
+      });
+      this.selectedGenre= null;
+      this.selectedOrder= null;
     }
   },
   //mouted 되는 시점에 바로 실행
@@ -94,4 +100,6 @@ export default {
 .right-side {
   padding-left: 100px;
 }
+
+
 </style>
