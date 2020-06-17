@@ -8,8 +8,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     authToken: cookies.get('auth-token'),
+
+    account: null,
+    othersAccount: null,
+    
     movies: [],
     starredMovie: null,
+    
     reviews: [],
     userId: cookies.get('user'),
   },
@@ -24,6 +29,12 @@ export default new Vuex.Store({
       state.authToken = token
       cookies.set('auth-token', token) 
     }, 
+    SET_ACCOUNT(state, user){
+      state.account = user
+    },
+    SET_OTHERS_ACCOUNT(state, user){
+      state.othersAccount = user
+    },
     SET_MOVIES(state, movies){
       state.movies = movies
     },
@@ -36,7 +47,7 @@ export default new Vuex.Store({
     SET_USER_ID(state, id) {
       console.log('user왔다', id)
       cookies.set('user', id) 
-      console.log(state.userId)
+      console.log('ㅎㅎ',cookies.get('user'))
     },
   },
   actions: { 
@@ -79,8 +90,22 @@ export default new Vuex.Store({
         })
         .catch(err => console.log(err.response.data))
     },
-    fetchMovies({ commit} ) {
-      axios.get( SERVER.URL + SERVER.ROUTES.movieList)
+    getAccount({ commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTES.profile)
+        .then(response => {
+          commit('SET_ACCOUNT', response.data)
+        })
+        .catch(err => console.log(err.response.data))
+    },
+    getOthersAccount({ commit }, id ) {
+      axios.get(SERVER.URL + SERVER.ROUTES.othersProfile + `${id}/`)
+        .then(response => {
+          commit('SET_OTHERS_ACCOUNT', response.data)
+        })
+        .catch(err => console.log(err.response.data))
+    },
+    fetchMovies({ commit}, params ) {
+      axios.get( SERVER.URL + SERVER.ROUTES.movieList, {...params})
         .then(response => commit('SET_MOVIES', response.data))
         .catch(err => console.log(err))
     },
