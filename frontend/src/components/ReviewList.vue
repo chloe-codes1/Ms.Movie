@@ -1,7 +1,10 @@
 <template>
 <div id="review-list">
     <h1>Review List</h1>
-    <table class="table table-hover table-sm">
+    <div>
+        <router-link :to="'/reviews/' + id + '/create'"><b-button>New</b-button></router-link>
+    </div>
+    <table class="table table-hover table-md">
         <thead>
             <tr>
                 <th scope="col" width="10%">ID</th>
@@ -17,12 +20,9 @@
             </tr>
         </tbody>
     </table>
-    <b-button><router-link :to="'/reviews/' + id + '/create'">New</router-link></b-button>
 </div>
 </template>
-
 <script>
-
 export default {
     name: 'ReviewList',
     props: ['reviews',],
@@ -31,16 +31,12 @@ export default {
             id: this.$route.params.id
         }
     },
-
     components: {
-        
     },
     methods: {
-
     }
 }
 </script>
-
 <style scoped>
 a:link, a:hover, a:active, a:visited{
     color: black;
@@ -54,7 +50,16 @@ thead {
     width: 75%;
     margin: 0 auto;
 }
-b-button {
-
+button {
+    background-color: white;
+    color: #3fb883;
+    border: 1px solid #3fb883;
+    float: left;
+    margin-bottom: 10px;
+}
+button:hover {
+    background-color: #3fb883;
+    color: white;
+    border: 1px solid #3fb883;
 }
 </style>

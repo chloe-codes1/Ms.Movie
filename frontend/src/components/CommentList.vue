@@ -3,14 +3,17 @@
     <hr>
     <div v-for="comment in comments" :key="comment.id">
         <div id="comment">
-            <div id="user-avatar"><b-avatar variant="warning"></b-avatar></div>
-            <div id="comment-content">
-                <p id="comment-text">{{comment.user}}  <span id="date">{{comment.updated_at}}</span></p>
-                <p>{{comment.content}}</p>
+            <div id="comment-body">
+                <div id="user-avatar"><b-avatar variant="warning"></b-avatar></div>
+                <div id="comment-content">
+                    <p id="comment-text">{{comment.username}}  <span id="date">{{comment.updated_at}}</span></p>
+                    <p>{{comment.content}}</p>
+                </div>
             </div>
-            <div>
-                <p>수정</p>
 
+            <div v-if="userId==comment.user">
+                <b-button variant="warning" size="sm">Update</b-button>
+                <b-button size="sm" variant="danger" @click="deleteComment({review: reviewId, comment: comment.id})">Delete</b-button>
             </div>
         </div>
         <hr>
@@ -22,16 +25,18 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
     name: 'CommentList',
-    props: ['comments'],
+    props: ['comments', 'userId'],
     data() {
         return {
-            isUser: false
+            reviewId: this.$route.params.id
         }
     },
-    computed: {
-    }
+    methods: {
+        ...mapActions(['deleteComment']),
+    },
 
 }
 </script>
@@ -39,7 +44,11 @@ export default {
 <style scoped>
 #comment {
     display: flex;
-    justify-content: left;
+    justify-content: space-between;
+    align-items: center;
+}
+#comment-body {
+    display: flex;
     align-items: center;
 }
 #comment-content {
