@@ -20,6 +20,7 @@
         <MovieItem v-for="movie in movies" :key="movie.id" :movie="movie" />
       </div>
     </div>
+    <button @click="scrollToTop" class="button-bottom btn">Top</button>
   </div>
 </template>
 
@@ -78,6 +79,9 @@ export default {
       });
       this.selectedGenre= null;
       this.selectedOrder= null;
+    },
+    scrollToTop: function() {
+      scroll(0, 0);
     }
   },
   //mouted 되는 시점에 바로 실행
@@ -101,5 +105,15 @@ export default {
   padding-left: 100px;
 }
 
+.button-bottom {
+    position: fixed;
+    right: 2vw;
+    bottom: 2vh;
+    background-color:  #3fb883;
+    padding: 4px 8px;
+    color: white;
+    font-weight: bold;
+    z-index: 4;
+}
 
 </style>

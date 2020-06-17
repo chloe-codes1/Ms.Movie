@@ -58,7 +58,7 @@ export default new Vuex.Store({
         console.log(res.data, 'res.data')
         commit('SET_TOKEN', res.data.key)
         commit('SET_USER_ID', res.data.user)
-        router.push({ name: 'Home'})
+        router.push({ name: 'Movies'})
       })
       .catch(
         err => console.log(err.response.data)

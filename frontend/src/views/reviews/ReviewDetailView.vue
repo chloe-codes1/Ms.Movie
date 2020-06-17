@@ -4,7 +4,9 @@
         <ReviewDetail :reviews="reviews" :likes="likes" :dislikes="dislikes"/>
         <div id="buttons-like">
             <div id="likes">
-                <b-button size="sm" id="likeButton" @click="likeReview(reviews.id)"><i id="likeThumb" class="far fa-thumbs-up fa-md" aria-hidden="true">Like</i></b-button>
+                <!-- <b-button size="sm" id="likeButton" @click="likeReview(reviews.id)"><i id="likeThumb" class="far fa-thumbs-up fa-md" aria-hidden="true">Like</i></b-button> -->
+                <b-button size="sm" id="likeButton" @click="templike"><i id="likeThumb" class="far fa-thumbs-up fa-md" aria-hidden="true">Like</i></b-button>
+                
                 <b-button size="sm" variant="danger" @click="dislikeReview(reviews.id)"><i class="far fa-thumbs-down fa-md" aria-hidden="true"> DisLike</i></b-button>
             </div>
             <div v-if="userId==reviews.user">
@@ -48,6 +50,9 @@ export default {
         goBack() {
             this.router.push(`/reviews/${this.reviews.movie}/`)
         },
+        templike(){
+            this.likes += 1
+        }
     },
     watch: {
         change: function() {

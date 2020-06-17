@@ -21,7 +21,7 @@
            
         </div>
         <hr>
-        <div id="review-content">
+        <div id="review-content" style="white-space: pre-line;">
             {{reviews.content}}
         </div>
         <hr>
