@@ -1,6 +1,6 @@
 <template>
 <div id="review-list">
-    <h1>Review List</h1>
+    <h4>Review List</h4>
     <div>
         <router-link :to="'/reviews/' + id + '/create'"><b-button>New</b-button></router-link>
     </div>
@@ -48,7 +48,7 @@ thead {
 }
 #review-list {
     width: 75%;
-    margin: 0 auto;
+    margin: 30px auto;
 }
 button {
     background-color: white;

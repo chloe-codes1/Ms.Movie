@@ -1,6 +1,6 @@
 <template>
     <div id="create">
-        <h3>Create Review</h3>
+        <h4 id="docTitle">Create Review</h4>
         <div id="form">
             <!-- title -->
             <b-form-group class="mb-2" label="Title" label-for="title" description="Write your review for the movie">
@@ -55,9 +55,12 @@ export default {
 </script>
 
 <style scoped>
+#docTitle {
+    
+}
 #create {
     width: 75%;
-    margin: 0 auto;
+    margin: 30px auto;
 }
 #form {
     text-align: left;
