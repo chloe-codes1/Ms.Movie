@@ -10,8 +10,10 @@ from rest_framework import status
 
 from .serializers import MovieSerializer
 from .models import Movie, Country, Cast, Genre
+from accounts.models import UserProfile
 
 import requests
+import random
 
 # API 관련 함수들 API.py에 있어서 import 
 import sys
@@ -19,14 +21,30 @@ sys.path.insert(0, '../API.py')
 
 import API
 
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 class MovieAPI(APIView):
     
     # GET 요청
     def get(self, request, format=None):
         movies = Movie.objects.all()
-        serializer = MovieSerializer(movies, many=True)
-        return Response(serializer.data)
+        if request.user.is_authenticated:
+            try:
+                user = get_object_or_404(User, id=request.user.id)
+                recommend_movies = list(Movie.objects.filter(genres__name__icontains=user.favorite))
+                if len(recommend_movies) < 12:
+                    recommend_movies += random.sample(list(Movie.objects.all()), 12-len(recommend_movies))
+            except UserProfile.DoesNotExist:
+                profile = None
+                recommend_movies = list(Movie.objects.all())
+            recommend_movies = random.sample(recommend_movies, 12)
 
+            serializer = MovieSerializer(recommend_movies, many=True)
+            return Response(serializer.data)
+        else:
+            serializer = MovieSerializer(movies, many=True)
+            return Response(serializer.data)
     # POST 요청
     def post(self, request, format=None):
         key = settings.TMDB_API_KEY
@@ -70,7 +88,6 @@ class MovieAPI(APIView):
                     except TypeError:
                         print('typeerror',detail_url )
                         continue
-
 
                     casts = []
 
