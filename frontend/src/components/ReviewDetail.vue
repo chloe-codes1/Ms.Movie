@@ -1,6 +1,6 @@
 <template>  
 <div>
-    <h3>Review For {{reviews.movie_title}}</h3>
+    <h4>Review For {{reviews.movie_title}}</h4>
     <hr>
     <div id="review-detail">
         <div id="title-content">
@@ -51,6 +51,9 @@ export default {
 </script>
 
 <style scoped>
+h4 {
+    margin-top: 30px;
+}
 #empty {
     width: 85px;
 }

@@ -1,6 +1,6 @@
 <template>
     <div id="signup">
-        <h1>Sign Up</h1>
+        <h4>Sign Up</h4>
         <b-form-group class="mb-2" label="Username" label-for="username" description="Type username">
             <b-form-input type="text" id="username" v-model="signupData.username"> </b-form-input>
         </b-form-group>
@@ -13,7 +13,7 @@
         <b-form-group class="mb-2" label="Favorite genre" label-for="favorite" description="Choose your favorite genre. We'll recommend movies based on your choice.">
             <b-form-select :options="options" id="favorite" v-model="signupData.favorite"></b-form-select>
         </b-form-group>
-        <b-button @click="signup(signupData)" class="btn ">Sign Up</b-button>
+        <b-button @click="signup(signupData)" id="submitButton">Sign Up</b-button>
 
         {{ signupData.favorites}}
     </div>
@@ -62,13 +62,21 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 #signup {
     text-align: left;
     width: 50%;
-    margin: auto;
+    margin: 30px auto;
 }
-h1 {
+h3 {
     text-align: center;
+}
+#submitButton {
+    background-color: #3fb883;
+    color: white;
+    border: 1px solid #3fb883;
+}
+#submitButton:hover {
+    background-color: #3baa7a;
 }
 </style>

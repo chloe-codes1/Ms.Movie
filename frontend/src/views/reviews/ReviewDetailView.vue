@@ -1,5 +1,6 @@
 <template>
     <div id="review-detail">
+        
         <ReviewDetail :reviews="reviews" :likes="likes" :dislikes="dislikes"/>
         <div id="buttons-like">
             <div id="likes">
@@ -7,8 +8,12 @@
                 <b-button size="sm" variant="danger" @click="dislikeReview(reviews.id)"><i class="far fa-thumbs-down fa-md" aria-hidden="true"> DisLike</i></b-button>
             </div>
             <div v-if="userId==reviews.user">
+                <b-button size="sm" @click="goBack">Back</b-button>
                 <router-link :to="'/reviews/detail/'+reviews.id+'/update'"><b-button variant="warning" size="sm">Update</b-button></router-link>
                 <b-button size="sm" variant="danger" @click="deleteReview({id: reviews.id, movie: reviews.movie})">Delete</b-button>
+            </div>
+            <div v-else>
+                <b-button size="sm" @click="goBack">Back</b-button>
             </div>
         </div>
         <CommentCreate/>
@@ -40,6 +45,9 @@ export default {
     },
     methods: {
         ...mapActions(['getReview', 'deleteReview', 'likeReview', 'dislikeReview']),
+        goBack() {
+            this.router.push(`/reviews/${this.reviews.movie}/`)
+        },
     },
     watch: {
         change: function() {

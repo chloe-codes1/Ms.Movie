@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1> 여긴 프로파일 페이지~~~ 하하하~~</h1>
-    <b-avatar></b-avatar>
+    <b-avatar variant="warning"></b-avatar>
     <div v-if="account">
       <p> 아이디: {{account.username}}</p>
       <p> 장르: {{account.favorites}}</p>
