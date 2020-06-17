@@ -3,7 +3,10 @@
     <h3>Review For {{reviews.movie_title}}</h3>
     <div id="review-detail">
         <div id="title-content">
-            <div id="empty"></div>
+            <div id="empty">
+                <i class="far fa-thumbs-up fa-md" aria-hidden="true">{{likes}}</i>
+                <i class="far fa-thumbs-down fa-md" aria-hidden="true"> {{dislikes}} </i>
+            </div>
             <div>
                 <h5>{{reviews.title}}</h5>
                 <p>by {{reviews.username}}</p>
@@ -29,24 +32,25 @@
 
 export default {
     name: 'ReviewDetailView',
-    props: ['reviews'],
+    props: ['reviews', 'likes', 'dislikes'],
     data() {
         return {
-            id: this.$route.params.id,   
+            id: this.$route.params.id,
         }
     },
     computed: {
          divideRating() {
             return this.reviews.rating/2
-        }
-    }
+        },
+    },
+    
     
 }
 </script>
 
 <style scoped>
 #empty {
-    width: 80px;
+    width: 85px;
 }
 #title-content {
     display: flex;
@@ -68,5 +72,8 @@ p {
 }
 #date {
     margin-bottom: 5px;
+}
+i {
+    margin: 5px;
 }
 </style>

@@ -21,6 +21,7 @@ export default new Vuex.Store({
   getters: {
     isLoggedIn: state => !!state.authToken,
     config: () => ({headers: { Authorization: `Token ${cookies.get('auth-token')}` }}),
+    id: () => ({user: cookies.get('user')})
   }, 
   mutations:{ 
     SET_TOKEN(state, token){
@@ -166,6 +167,20 @@ export default new Vuex.Store({
       axios.delete(SERVER.URL + `/reviews/${data.review}/comments/${data.comment}`, getters.config)
         .then(() => {
         router.history.go(0)
+        })
+    },
+    likeReview( {getters}, data) {
+      console.log(getters.id)
+      console.log(SERVER.URL + `/reviews/${data}/like`)
+      axios.put(SERVER.URL + `/reviews/${data}/like/`, getters.id)
+        .then( (res) => {
+          console.log(res.data)
+        })
+    },
+    dislikeReview( {getters}, data) {
+      axios.put(SERVER.URL + `/reviews/${data}/dislike/`, getters.id)
+        .then( (res) => {
+          console.log(res.data)
         })
     },
 

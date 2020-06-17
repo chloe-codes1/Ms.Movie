@@ -5,9 +5,11 @@ from rest_framework.views import APIView
 from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .serializers import ReviewSerializer, ReviewDetailSerializer, ReviewListSerializer, CommentSerializer, ReportSerializer
+from .serializers import ReviewSerializer, ReviewDetailSerializer, ReviewListSerializer, CommentSerializer, ReportSerializer, LikeSerializer, DislikeSerializer
 from .models import Review, Comment, Report
 from movies.models import Movie
+from accounts.models import User
+from django.contrib.auth import get_user_model
 
 class ReviewListCreate(APIView):
     def get(self, request, movie_pk):
@@ -44,7 +46,11 @@ class ReviewDetail(APIView):
     @permission_classes([IsAuthenticated])
     def put(self, request, review_pk):
         review = self.get_object(review_pk)
+        print(request)
+        print(request.user)
         if review.user == request.user:
+            print(review.user)
+            print(request.user)
             serializer = ReviewSerializer(review, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
@@ -64,37 +70,45 @@ class ReviewDetail(APIView):
             return Response(status=status.HTTP_403_FORBIDDEN)
 
 # 좋아요 기능
-@permission_classes([IsAuthenticated])
-def like(request, review_pk):
-    review = get_object_or_404(Review, pk=review_pk)
-    user = request.user
-    is_like = True
-    if review.like_users.filter(id=user.id).exists():
-        review.like_users.remove(user)
-        is_like = False
-    else:
-        review.like_users.add(user)
-    context = {
-        'is_like': is_like,
-    }
-    return JsonResponse(context)
 
-  
-# 싫어요 기능
-@permission_classes([IsAuthenticated])
-def dislike(request, review_pk):
-    review = get_object_or_404(Review, pk=review_pk)
-    user = request.user
-    is_dislike = True
-    if review.dislike_users.filter(id=user.id).exists():
-        review.dislike_users.remove(user)
-        is_dislike = False
-    else:
-        review.dislike_users.add(user)
-    context = {
-        'is_dislike': is_dislike,
-    }
-    return JsonResponse(context)
+class Like(APIView):
+    @permission_classes([IsAuthenticated])
+    def put(self, request, review_pk):
+        review = get_object_or_404(Review, pk=review_pk)
+        user_id = (int(request.data['user']))
+        user = User.objects.get(id=user_id)
+        print(user)
+        print(user.id)
+        if review.liked_users.filter(id=user.id).exists():
+            review.liked_users.remove(user)
+        else:
+            review.liked_users.add(user)
+        context = {
+            'liked_user': review.liked_users,
+        }
+        serializer = LikeSerializer(review, data=context)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+        
+    
+class Dislike(APIView):
+    @permission_classes([IsAuthenticated])
+    def put(self, request, review_pk):
+        review = get_object_or_404(Review, pk=review_pk)
+        user_id = (int(request.data['user']))
+        user = User.objects.get(id=user_id)
+        if review.disliked_users.filter(id=user.id).exists():
+            review.disliked_users.remove(user)
+        else:
+            review.disliked_users.add(user)
+        context = {
+            'disliked_user': review.disliked_users,
+        }
+        serializer = DislikeSerializer(review, data=context)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
 
   
 class CommentCreate(APIView):
