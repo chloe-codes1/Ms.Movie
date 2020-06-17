@@ -12,15 +12,11 @@
             </div>
 
             <div v-if="userId==comment.user">
-                <b-button variant="warning" size="sm">Update</b-button>
-                <b-button size="sm" variant="danger" @click="deleteComment({review: reviewId, comment: comment.id})">Delete</b-button>
+                <a id="deleteLink" @click="deleteComment({review: reviewId, comment: comment.id})">Delete</a>
             </div>
         </div>
         <hr>
-    </div>
-    
-    
-    
+    </div>   
 </div>
 </template>
 
@@ -65,6 +61,13 @@ p {
 }
 #date {
     font-weight: normal;
+}
+#deleteLink {
+    color: gray;
+}
+#deleteLink:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 </style>

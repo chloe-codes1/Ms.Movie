@@ -9,7 +9,9 @@ export default{
         movieDetail: '/movies/:id',
         reviewList: '/reviews/:id/',
         reviewDetail: '/reviews/detail/:id',
-        commentCreate: 'reviews/:id/comments/',
-        commentDetail: 'reviews/:reviewId/comments/:commentId',
+        commentCreate: '/reviews/:id/comments/',
+        commentDetail: '/reviews/:reviewId/comments/:commentId',
+        reviewLike: '/reviews/:id/like/',
+        reviewDislike: '/reviews/:id/dislike/',
     }
 }
