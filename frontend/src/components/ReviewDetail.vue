@@ -1,6 +1,7 @@
 <template>  
 <div>
     <h3>Review For {{reviews.movie_title}}</h3>
+    <hr>
     <div id="review-detail">
         <div id="title-content">
             <div id="empty">
@@ -9,11 +10,12 @@
             </div>
             <div>
                 <h5>{{reviews.title}}</h5>
-                <p>by {{reviews.username}}</p>
+                
                 <b-form-rating id="rating-inline" v-model="divideRating" inline no-border variant="warning" readonly></b-form-rating>
                 <label for="rating-inline"><p>{{reviews.rating}}</p></label>
             </div>
             <div>
+                <p>by {{reviews.username}}</p>
                 <p id="date">{{reviews.updated_at}}</p>
             </div>
            
