@@ -50,3 +50,14 @@ class ReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Report
         fields = '__all__'
+
+
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ('liked_users',)
+
+class DislikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ('disliked_users',)
