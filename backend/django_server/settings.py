@@ -144,6 +144,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'accounts.serializers.UserSerializer',
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -179,6 +182,9 @@ REST_AUTH_SERIALIZERS = {
     'TOKEN_SERIALIZER': 'accounts.serializers.TokenSerializer',
 }
 
+# REST_AUTH_REGISTER_SERIALIZERS = {
+#     "REGISTER_SERIALIZER": "accounts.serializers.UserSerializer",
+# }
 
 # DRF auth가 JWT를 사용하게 하는 설정
 # REST_USE_JWT = True
@@ -196,6 +202,7 @@ import datetime
 # }
 
 ACCOUNT_LOGOUT_ON_GET = True
+# ACCOUNT_SIGNUP_FORM_CLASS='accounts.forms.SignupForm'
 
 CORS_ORIGIN_ALLOW_ALL = True
 

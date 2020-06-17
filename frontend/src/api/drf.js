@@ -5,6 +5,8 @@ export default{
         signup: '/rest-auth/signup/',
         login: '/rest-auth/login/',
         logout: '/rest-auth/logout/',
+        profile: '/accounts/profile/',
+        othersProfile: '/accounts/',
         movieList: '/movies/',
         movieDetail: '/movies/:id',
         reviewList: '/reviews/:id/',

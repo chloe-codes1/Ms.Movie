@@ -7,6 +7,7 @@ import Cast from '@/views/movies/Cast.vue'
 import SignupView from '@/views/accounts/SignupView.vue'
 import LoginView from '@/views/accounts/LoginView.vue'
 import LogoutView from '@/views/accounts/LogoutView.vue'
+import Profile from '@/views/accounts/Profile.vue'
 
 import ReviewListCreate from '@/views/reviews/ReviewListCreate.vue'
 import ReviewDetailView from '@/views/reviews/ReviewDetailView.vue'
@@ -56,6 +57,11 @@ Vue.use(VueRouter)
     meta: {
       title: 'Sign Up'
     }
+  },
+  {
+    path: '/accounts/:id',
+    name: 'Profile',
+    component: Profile
   },
   {
     path: '/reviews/:id',
