@@ -11,7 +11,7 @@ export default new Vuex.Store({
     movies: [],
     starredMovie: null,
     reviews: [],
-    userId: 0,
+    userId: cookies.get('user'),
   },
   getters: {
     isLoggedIn: state => !!state.authToken,
@@ -34,7 +34,7 @@ export default new Vuex.Store({
     },
     SET_USER_ID(state, id) {
       console.log('user왔다', id)
-      state.userId = id
+      cookies.set('user', id) 
       console.log(state.userId)
     },
   },
@@ -45,6 +45,7 @@ export default new Vuex.Store({
       .then(res => {
         console.log(res.data, 'res.data')
         commit('SET_TOKEN', res.data.key)
+        commit('SET_USER_ID', res.data.user)
         router.push({ name: 'Home'})
       })
       .catch(
@@ -116,18 +117,33 @@ export default new Vuex.Store({
         })
         .catch(err => console.log(err))
     },
-    // getUserId
-
-
-
-    // Comment Create
+    deleteReview( {getters}, data) {
+      axios.delete(SERVER.URL + `/reviews/detail/${data.id}/`, getters.config)
+        .then(() => {
+          router.push(`/reviews/${data.movie}`)
+        })
+    },
+    // Comment 
     createComment( {getters}, data ) {
-      console.log(data)
       axios.post(SERVER.URL + `/reviews/${data.id}/comments/`, data.commentData, getters.config)
       .then(() => {
         router.history.go(0)
       })
-    }
+    },
+    updateComment( {getters}, data ) {
+      axios.put(SERVER.URL + `/reviews/${data.review_id}/comments/${data.comment_id}`, data.commentData, getters.config)
+        .then(() => {
+          router.history.go(0)
+        })
+    },
+    deleteComment( {getters}, data ) {
+      console.log(data)
+      axios.delete(SERVER.URL + `/reviews/${data.review}/comments/${data.comment}`, getters.config)
+        .then(() => {
+        router.history.go(0)
+        })
+    },
+
   },
   modules: {
   }

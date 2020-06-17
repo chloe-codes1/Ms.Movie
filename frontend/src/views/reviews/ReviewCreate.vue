@@ -55,6 +55,7 @@ export default {
 <style>
 #create {
     width: 75%;
+    margin: 0 auto;
 }
 b-form-group {
     text-align: left;
