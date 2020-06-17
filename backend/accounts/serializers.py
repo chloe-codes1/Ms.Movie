@@ -26,3 +26,9 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         UserProfile.objects.update_or_create(user=user,**profile_data)
         return user
+
+# 이걸로 Token key랑 user id 같이 들고온다!
+class TokenSerializer(serializers.ModelSerializer):    
+    class Meta:
+        model = Token
+        fields = ('key', 'user')

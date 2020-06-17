@@ -28,23 +28,49 @@ class MovieAPI(APIView):
     
     # GET 요청
     def get(self, request, format=None):
-        movies = Movie.objects.all()
-        if request.user.is_authenticated:
-            try:
-                user = get_object_or_404(User, id=request.user.id)
-                recommend_movies = list(Movie.objects.filter(genres__name__icontains=user.favorite))
-                if len(recommend_movies) < 12:
-                    recommend_movies += random.sample(list(Movie.objects.all()), 12-len(recommend_movies))
-            except UserProfile.DoesNotExist:
-                profile = None
-                recommend_movies = list(Movie.objects.all())
-            recommend_movies = random.sample(recommend_movies, 12)
+        genre = request.GET.get('genre', None)
+        order_by = request.GET.get('order_by', None)
+        keyword = request.GET.get('keyword', None)
 
-            serializer = MovieSerializer(recommend_movies, many=True)
-            return Response(serializer.data)
-        else:
-            serializer = MovieSerializer(movies, many=True)
-            return Response(serializer.data)
+        movies = Movie.objects.all()
+        if genre:
+            movies = Movie.objects.filter(genres__name__icontains=genre)
+        if order_by:
+            option = order_by
+            if option == 'Top rating':
+                movies = Movie.objects.order_by('-vote_average')
+            elif option == 'Latest':
+                movies = Movie.objects.order_by('-release_date')
+            elif option == 'Oldest':
+                movies = Movie.objects.order_by('release_date')
+        if keyword:
+            movies = Movie.objects.filter(title__icontains=keyword)
+        serializer = MovieSerializer(movies, many=True)
+        return Response(serializer.data)
+
+
+
+        # 주현 눈물의 현장 ... 추천 알고리즘...
+
+        # movies = Movie.objects.all()
+        # if request.user.is_authenticated:
+        #     try:
+        #         user = get_object_or_404(User, id=request.user.id)
+        #         recommend_movies = list(Movie.objects.filter(genres__name__icontains=user.favorite))
+        #         if len(recommend_movies) < 12:
+        #             recommend_movies += random.sample(list(Movie.objects.all()), 12-len(recommend_movies))
+        #     except UserProfile.DoesNotExist:
+        #         profile = None
+        #         recommend_movies = list(Movie.objects.all())
+        #     recommend_movies = random.sample(recommend_movies, 12)
+
+        #     serializer = MovieSerializer(recommend_movies, many=True)
+        #     return Response(serializer.data)
+        # else:
+        #     serializer = MovieSerializer(movies, many=True)
+        #     return Response(serializer.data)
+
+
     # POST 요청
     def post(self, request, format=None):
         key = settings.TMDB_API_KEY
