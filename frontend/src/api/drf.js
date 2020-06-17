@@ -10,5 +10,6 @@ export default{
         reviewList: '/reviews/:id/',
         reviewDetail: '/reviews/detail/:id',
         commentCreate: 'reviews/:id/comments/',
+        commentDetail: 'reviews/:reviewId/comments/:commentId',
     }
 }

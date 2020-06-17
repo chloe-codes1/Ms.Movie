@@ -33,6 +33,15 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+button {
+    background-color: white;
+    color: #3fb883;
+    border: 1px solid #3fb883;
+}
+button:hover {
+    background-color: #3fb883;
+    color: white;
+    border: 1px solid #3fb883;
+}
 </style>

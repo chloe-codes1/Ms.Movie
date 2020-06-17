@@ -11,6 +11,7 @@ import LogoutView from '@/views/accounts/LogoutView.vue'
 import ReviewListCreate from '@/views/reviews/ReviewListCreate.vue'
 import ReviewDetailView from '@/views/reviews/ReviewDetailView.vue'
 import ReviewCreate from '@/views/reviews/ReviewCreate.vue'
+import ReviewUpdate from '@/views/reviews/ReviewUpdate.vue'
 Vue.use(VueRouter)
 
   const routes = [
@@ -76,6 +77,14 @@ Vue.use(VueRouter)
     path: '/reviews/detail/:id',
     name: 'ReviewDetailView',
     component: ReviewDetailView,
+  },
+  {
+    path: '/reviews/detail/:id/update',
+    name: 'ReviewUpdate',
+    component: ReviewUpdate,
+    meta: {
+      title: 'Ms.Movie | Update a review'
+    }
   },
 ]
 

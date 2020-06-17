@@ -6,18 +6,17 @@
             <div id="empty"></div>
             <div>
                 <h5>{{reviews.title}}</h5>
-                <div>
-                    <b-form-rating id="rating-inline" v-model="divideRating" inline no-border variant="warning" readonly></b-form-rating>
-                    <label for="rating-inline"><h5>{{reviews.rating}}</h5></label>
-                </div>
+                <p>by {{reviews.username}}</p>
+                <b-form-rating id="rating-inline" v-model="divideRating" inline no-border variant="warning" readonly></b-form-rating>
+                <label for="rating-inline"><p>{{reviews.rating}}</p></label>
             </div>
             <div>
-                <p>{{reviews.updated_at}}</p>
+                <p id="date">{{reviews.updated_at}}</p>
             </div>
            
         </div>
         <hr>
-        <div>
+        <div id="review-content">
             {{reviews.content}}
         </div>
         <hr>
@@ -54,8 +53,20 @@ export default {
     justify-content: space-between;
     align-items: flex-end;
 }
-
+#review-content {
+    min-height: 400px;
+}
 label {
     color: red;
+}
+p {
+    margin-bottom: 0;
+}
+#rating-inline {
+    padding: 0;
+    margin: 0;
+}
+#date {
+    margin-bottom: 5px;
 }
 </style>

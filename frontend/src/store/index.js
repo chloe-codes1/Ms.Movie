@@ -11,7 +11,7 @@ export default new Vuex.Store({
     movies: [],
     starredMovie: null,
     reviews: [],
-    id: null,
+    userId: cookies.get('user'),
   },
   getters: {
     isLoggedIn: state => !!state.authToken,
@@ -19,6 +19,7 @@ export default new Vuex.Store({
   }, 
   mutations:{ 
     SET_TOKEN(state, token){
+      console.log('토큰왔다.', token)
       state.authToken = token
       cookies.set('auth-token', token) 
     }, 
@@ -31,13 +32,20 @@ export default new Vuex.Store({
     SET_REVIEWS(state, reviews){
       state.reviews = reviews
     },
+    SET_USER_ID(state, id) {
+      console.log('user왔다', id)
+      cookies.set('user', id) 
+      console.log(state.userId)
+    },
   },
   actions: { 
+    
     postAuthData({ commit }, info){
       axios.post(SERVER.URL + info.location, info.data)
       .then(res => {
         console.log(res.data, 'res.data')
         commit('SET_TOKEN', res.data.key)
+        commit('SET_USER_ID', res.data.user)
         router.push({ name: 'Home'})
       })
       .catch(
@@ -64,6 +72,7 @@ export default new Vuex.Store({
         .then( ()=> { //Django DB에서는 삭제되어 있음 but, cookie, state에는 남아있음
           // cookies.remove가 null 뒤에 들어가야함!
           commit('SET_TOKEN', null)  // commit은 state 를 바꿀 수 있는 유일한 방법!!! -> state 에서도 삭제
+          commit('SET_USER_ID', [])
           cookies.remove('auth-token') //cookie 에서는 삭제
           router.push('/')
         })
@@ -99,16 +108,42 @@ export default new Vuex.Store({
         .then(response => commit('SET_REVIEWS', response.data))
         .catch(err => console.log(err))
     },
-    // get Comment list
-
-
-    // Comment Create
+    updateReview( {getters}, data) {
+      console.log(data.reviewData)
+      console.log(data.id)
+      axios.put(SERVER.URL + `/reviews/detail/${data.id}/`, data.reviewData, getters.config)
+        .then(() => {
+          router.push(`/reviews/detail/${data.id}/`)
+        })
+        .catch(err => console.log(err))
+    },
+    deleteReview( {getters}, data) {
+      axios.delete(SERVER.URL + `/reviews/detail/${data.id}/`, getters.config)
+        .then(() => {
+          router.push(`/reviews/${data.movie}`)
+        })
+    },
+    // Comment 
     createComment( {getters}, data ) {
       axios.post(SERVER.URL + `/reviews/${data.id}/comments/`, data.commentData, getters.config)
       .then(() => {
         router.history.go(0)
       })
-    }
+    },
+    updateComment( {getters}, data ) {
+      axios.put(SERVER.URL + `/reviews/${data.review_id}/comments/${data.comment_id}`, data.commentData, getters.config)
+        .then(() => {
+          router.history.go(0)
+        })
+    },
+    deleteComment( {getters}, data ) {
+      console.log(data)
+      axios.delete(SERVER.URL + `/reviews/${data.review}/comments/${data.comment}`, getters.config)
+        .then(() => {
+        router.history.go(0)
+        })
+    },
+
   },
   modules: {
   }
