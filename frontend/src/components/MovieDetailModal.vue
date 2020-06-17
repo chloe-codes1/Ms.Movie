@@ -38,8 +38,8 @@
             <p class="font-weight-bold">Genres</p>
               <span
                 class="badge badge-light mr-3 mb-4"
-                v-for="(genre, index) in movie.genres"
-                :key="index"
+                v-for="genre in movie.genres"
+                :key="genre.id"
               >{{genre}}</span>
             <p class="font-weight-bold">Top Billed Cast</p>
             <div

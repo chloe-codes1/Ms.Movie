@@ -46,7 +46,7 @@ export default new Vuex.Store({
     SET_USER_ID(state, id) {
       console.log('user왔다', id)
       cookies.set('user', id) 
-      console.log(state.userId)
+      console.log('ㅎㅎ',cookies.get('user'))
     },
   },
   actions: { 
@@ -103,8 +103,8 @@ export default new Vuex.Store({
         })
         .catch(err => console.log(err.response.data))
     },
-    fetchMovies({ commit} ) {
-      axios.get( SERVER.URL + SERVER.ROUTES.movieList)
+    fetchMovies({ commit}, params ) {
+      axios.get( SERVER.URL + SERVER.ROUTES.movieList, {...params})
         .then(response => commit('SET_MOVIES', response.data))
         .catch(err => console.log(err))
     },

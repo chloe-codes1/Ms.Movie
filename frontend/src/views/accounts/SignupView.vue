@@ -1,16 +1,16 @@
 <template>
     <div id="signup">
         <h1>Sign Up</h1>
-        <b-form-group class="mb-2" label="아이디" label-for="username" description="아이디를 작성해주세요">
+        <b-form-group class="mb-2" label="Username" label-for="username" description="Type username">
             <b-form-input type="text" id="username" v-model="signupData.username"> </b-form-input>
         </b-form-group>
-        <b-form-group class="mb-2" label="비밀번호" label-for="password1" description="비밀번호를 작성해주세요">
+        <b-form-group class="mb-2" label="Password" label-for="password1" description="Type password">
             <b-form-input type="password" id="password1" v-model="signupData.password1"> </b-form-input>
         </b-form-group>
-        <b-form-group class="mb-2" label="비밀번호 확인" label-for="password2" description="비밀번호를 다시 한번 작성해주세요">
+        <b-form-group class="mb-2" label="Confrim password" label-for="password2" description="Retype password">
             <b-form-input type="password" id="password2" v-model="signupData.password2"> </b-form-input>
         </b-form-group>
-        <b-form-group class="mb-2" label="좋아하는 장르" label-for="favorite" description="좋아하는 영화 장르를 알려주세요">
+        <b-form-group class="mb-2" label="Favorite genre" label-for="favorite" description="Choose your favorite genre. We'll recommend movies based on your choice.">
             <b-form-select :options="options" id="favorite" v-model="signupData.favorite"></b-form-select>
         </b-form-group>
         <b-button @click="signup(signupData)" class="btn ">Sign Up</b-button>
