@@ -16,7 +16,7 @@
         </li>
       </ul>
       <div>
-        <div class="d-block d-sm-none" style="height:40px;">
+        <div class="d-block d-md-none" style="height:40px;">
           <button
             style="position: absolute;left:10px; top: 10px;"
             class="navbar-toggler mr-auto border-0"
