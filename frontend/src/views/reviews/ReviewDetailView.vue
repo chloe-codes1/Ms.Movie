@@ -1,7 +1,7 @@
 <template>
     <div id="review-detail" class="row">
         <div class="col-2">
-            <ReviewSidebar/>
+            <ReviewSidebar :movieId="this.$route.params.movieId"/>
         </div>
         <div class="col-10">
             <ReviewDetail :reviews="reviews" :likeCount="likeCount" :dislikeCount="dislikeCount" />
@@ -13,7 +13,7 @@
                 </div>
                 <div v-if="userId==reviews.user">
                     <b-button size="sm" @click="goBack">Back</b-button>
-                    <router-link :to="'/reviews/detail/'+reviews.id+'/update'"><b-button variant="warning" size="sm">Update</b-button></router-link>
+                    <router-link :to="'/reviews/'+reviews.movie+'/detail/'+reviews.id+'/update'"><b-button variant="warning" size="sm">Update</b-button></router-link>
                     <b-button size="sm" variant="danger" @click="deleteReview({id: reviews.id, movie: reviews.movie})">Delete</b-button>
                 </div>
                 <div v-else>
@@ -72,7 +72,7 @@ export default {
         },     
     }, 
     created() {
-        this.getReview(this.$route.params.id)
+        this.getReview({id: this.$route.params.id, movie: this.$route.params.movieId})
     }
 
 }

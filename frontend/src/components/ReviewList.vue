@@ -15,7 +15,8 @@
             <tbody>
                 <tr v-for="review in reviews" :key="review.id" :review='review'>
                     <th scope="row">{{review.id}}</th>
-                    <b-link :href="`http://localhost:8080/reviews/detail/${review.id}`"><td>{{review.title}}</td></b-link>
+                    
+                    <b-link :href="`http://localhost:8080/reviews/${id}/detail/${review.id}`"><td>{{review.title}}</td></b-link>
                     <td>{{review.user}}</td>    
                 </tr>
             </tbody>

@@ -91,12 +91,12 @@ Vue.use(VueRouter)
     }
   },
   {
-    path: '/reviews/detail/:id',
+    path: '/reviews/:movieId/detail/:id',
     name: 'ReviewDetailView',
     component: ReviewDetailView,
   },
   {
-    path: '/reviews/detail/:id/update',
+    path: '/reviews/:movieId/detail/:id/update',
     name: 'ReviewUpdate',
     component: ReviewUpdate,
     meta: {
