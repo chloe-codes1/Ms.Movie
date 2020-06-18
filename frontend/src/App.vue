@@ -35,15 +35,15 @@
             <li class="nav-item active">
               <router-link to="/movies" class="text-decoration-none nav-links mr-3 py-2">Movies</router-link>
             </li>
-             <li v-if="isLoggedIn" class="nav-item">
+            <li v-if="isLoggedIn" class="nav-item">
+              <router-link to="/" class="text-decoration-none nav-links mr-3 py-2">Recommendation</router-link>
+            </li>
+             <!-- <li v-if="isLoggedIn" class="nav-item">
               <router-link
                 :to="'/accounts/'+userId"
                 class="text-decoration-none nav-links mr-3 py-2"
               >Profile</router-link>
-            </li>
-             <li v-if="isLoggedIn" class="nav-item">
-              <router-link to="/" class="text-decoration-none nav-links mr-3 py-2">Recommendation</router-link>
-            </li>
+            </li> -->
             <li v-if="isLoggedIn" class="nav-item">
               <router-link to="/accounts/logout" class="text-decoration-none nav-links py-2">Logout</router-link>
             </li>

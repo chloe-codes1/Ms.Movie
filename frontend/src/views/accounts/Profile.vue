@@ -1,41 +1,38 @@
 <template>
-  <div>
-    <b-avatar></b-avatar>
-    <div v-if="account">
-      <p> Username: {{account.username}}</p>
-      <p> Genre: {{account.favorites}}</p>
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-xl-6">
+        <b-avatar class="mr-3" size="4rem"></b-avatar>
+        <span v-if="othersAccount">Username: {{othersAccount.username}}</span>
+      </div>
+      <div class="col-xl-6">
+        <p v-if="othersAccount">Genre: {{othersAccount.favorite}}</p>
+      </div>
     </div>
-    <div v-if="othersAccount">
-      <p> Username: {{othersAccount.username}}</p>
-      <p> Genre: {{othersAccount.favorite}}</p>
-    </div>                                                                                                                                                                                                                                                                                                                                                                                                                                         
   </div>
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import { mapState, mapActions } from "vuex";
 
 export default {
-  name: 'Profile',
+  name: "Profile",
   computed: {
-    ...mapState(['account', 'othersAccount'])
+    ...mapState(["othersAccount"])
   },
   data() {
-    return{
-      // variable routing 으로 가져오깅
+    return {
       id: this.$route.params.id
-    }
+    };
   },
   methods: {
-    ...mapActions(['getAccount', 'getOthersAccount'])
+    ...mapActions(["getOthersAccount"])
   },
   created() {
-    // this.getAccount()
-    this.getOthersAccount(this.id)
+    this.getOthersAccount(this.id);
   }
-}
+};
 </script>
 
 <style>
-
 </style>
