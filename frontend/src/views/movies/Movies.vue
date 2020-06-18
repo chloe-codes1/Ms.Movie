@@ -25,11 +25,9 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mapState, mapActions } from "vuex";
 import MovieItem from "@/components/MovieItem";
 import MovieFilter from "@/components/MovieFilter";
-const SERVER = "http://localhost:8000"
 
 export default {
   name: "Movies",
