@@ -1,6 +1,6 @@
 <template>
-  <div class="home container mt-4">
-    <h4 class="my-3">Movie recommendations just for {{othersAccount.username}}!</h4>
+  <div class="home container mt-4" v-if="othersAccount">
+    <h4 class="my-3">Movie recommendations just for <span class="username">{{othersAccount.username}}</span>!</h4>
     <p>Movie filtering based on preferences of movie recommendation algorithm.</p>
     <div class="row">
       <MovieItem v-for="movie in recommendations" :key="movie.id" :movie="movie" class="col-md-12 col-lg-4 col-xl-3" />
@@ -31,5 +31,8 @@ export default {
 };
 </script>
 <style scoped>
-
+h4 > span.username{
+  color: #3fb883;
+  font-weight: bold;
+}
 </style>

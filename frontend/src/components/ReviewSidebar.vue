@@ -1,7 +1,7 @@
 <template>
 <div id="wrapper">
     <nav id="sidebar">
-        <div class="sidebar-header">
+        <div class="sidebar-header" v-if="starredMovie">
             <h4>Review For</h4>
             <h4>{{starredMovie.title}}</h4>
         </div>

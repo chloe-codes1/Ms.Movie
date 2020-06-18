@@ -30,7 +30,7 @@ export default {
     ...mapActions(['getAccount', 'getOthersAccount'])
   },
   created() {
-    this.getAccount()
+    // this.getAccount()
     this.getOthersAccount(this.id)
   }
 }

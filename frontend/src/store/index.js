@@ -27,7 +27,6 @@ export default new Vuex.Store({
   }, 
   mutations:{ 
     SET_TOKEN(state, token){
-      console.log('토큰왔다.', token)
       state.authToken = token
       cookies.set('auth-token', token) 
     }, 
@@ -52,9 +51,7 @@ export default new Vuex.Store({
       state.dislikeCount = reviews.dislikes
     },
     SET_USER_ID(state, id) {
-      console.log('user왔다', id)
       cookies.set('user', id) 
-      console.log('ㅎㅎ',cookies.get('user'))
     },
     SET_LIKE(state, like) {
       state.likeCount = like
@@ -78,10 +75,12 @@ export default new Vuex.Store({
         else {
           router.push({ name: 'Movies'})
         }
-        
       })
       .catch(
-        err => console.log(err.response.data)
+        err => { 
+          console.log(err.response.data)
+          alert(Object.values(err.response.data)[0])
+        }
       )
     },  
     signup({ dispatch }, signupData){

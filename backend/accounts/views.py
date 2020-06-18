@@ -51,3 +51,6 @@ class OtherUserAPI(APIView):
 
 
 
+# class AuthInfoUpdateView(generics.UpdateAPIView):
+#     def put(self, request, user_pk):
+#         user = get_object_or_404(User, pk=user_pk)
