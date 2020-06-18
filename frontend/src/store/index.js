@@ -70,7 +70,6 @@ export default new Vuex.Store({
     postAuthData({ commit }, info){
       axios.post(SERVER.URL + info.location, info.data)
       .then(res => {
-        console.log(res.data, 'res.data')
         commit('SET_TOKEN', res.data.key)
         commit('SET_USER_ID', res.data.user)
         if (info.location == SERVER.ROUTES.signup){
@@ -82,7 +81,6 @@ export default new Vuex.Store({
       })
       .catch(
         err => { 
-          console.log(err.response.data)
           alert(Object.values(err.response.data)[0])
         }
       )
@@ -99,7 +97,6 @@ export default new Vuex.Store({
         data: loginData,  
         location: SERVER.ROUTES.login
       }       
-      console.log('info', info);
       dispatch('postAuthData', info)
     },
     logout({ commit }){
@@ -156,8 +153,6 @@ export default new Vuex.Store({
         .catch(err => console.log(err))       
     },
     createReview( {getters}, data) {
-      console.log(cookies.get('auth-token'));
-      console.log(getters.config) 
       axios.post(SERVER.URL + `/reviews/${data.id}/`, data.reviewData, getters.config)
         .then(() => {
           router.push(`/reviews/${data.id}/`)
@@ -172,7 +167,6 @@ export default new Vuex.Store({
     },
     updateReview( {getters}, data) {
       
-      console.log(data)
       axios.put(SERVER.URL + `/reviews/${data.movie}/detail/${data.id}/`, data.reviewData, getters.config)
         .then(() => {
           router.push(`/reviews/${data.movie}/detail/${data.id}/`)
@@ -180,7 +174,6 @@ export default new Vuex.Store({
         .catch(err => console.log(err))
     },
     deleteReview( {getters}, data) {
-      console.log(data)
       axios.delete(SERVER.URL + `/reviews/${data.movie}/detail/${data.id}/`, getters.config)
         .then(() => {
           router.push(`/reviews/${data.movie}`)
@@ -200,7 +193,6 @@ export default new Vuex.Store({
         })
     },
     deleteComment( {getters}, data ) {
-      console.log(data)
       axios.delete(SERVER.URL + `/reviews/${data.review}/comments/${data.comment}`, getters.config)
         .then(() => {
         router.history.go(0)
