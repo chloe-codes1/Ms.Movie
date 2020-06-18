@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-2">
-        <ReviewSidebar/>
+        <ReviewSidebar :movieId="id"/>
         </div>
         <div class="col-10">
         <ReviewList :reviews="reviews"/>       

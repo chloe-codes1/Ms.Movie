@@ -72,7 +72,9 @@ export default {
       axios
         .get(TMDB_API_URL)
         .then(res => {
+          console.log(res.data)
           res.data.cast.map( item => {
+            console.log(item)
             if (item.poster_path){
               this.starredMovies.push(item)
             }

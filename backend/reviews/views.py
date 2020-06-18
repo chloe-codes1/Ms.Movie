@@ -25,7 +25,6 @@ class ReviewListCreate(APIView):
     def post(self, request, movie_pk):
         movie = get_object_or_404(Movie, id=movie_pk)
         user = request.user
-        print(user, movie)
         serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             review = serializer.save(user=user, movie=movie)
@@ -39,12 +38,12 @@ class ReviewDetail(APIView):
     def get_object(self, pk):
         return get_object_or_404(Review, pk=pk)
 
-    def get(self, request, review_pk):
+    def get(self, request, movie_pk, review_pk):
         review = self.get_object(review_pk)
         serializer = ReviewDetailSerializer(review)
         return Response(serializer.data)
     @permission_classes([IsAuthenticated])
-    def put(self, request, review_pk):
+    def put(self, request, movie_pk, review_pk):
         review = self.get_object(review_pk)
         print(request)
         print(request.user)
@@ -61,7 +60,7 @@ class ReviewDetail(APIView):
 
           
     @permission_classes([IsAuthenticated])
-    def delete(self, request, review_pk):
+    def delete(self, request, movie_pk, review_pk):
         review = self.get_object(review_pk)
         if review.user == request.user:
             review.delete()
