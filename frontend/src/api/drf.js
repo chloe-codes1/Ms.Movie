@@ -1,6 +1,6 @@
 // drf.js 를 import 하면 아래의 코드를 object로 받게 하기
 export default{
-    URL: 'http://localhost:8000', // **잊지마! 배포 시 바꿔야 할 것!!**
+    URL: 'http://ec2-3-34-185-6.ap-northeast-2.compute.amazonaws.com:8000', // **잊지마! 배포 시 바꿔야 할 것!!**
     ROUTES: {
         signup: '/rest-auth/signup/',
         login: '/rest-auth/login/',
