@@ -1,40 +1,48 @@
 <template>
-    <div id="create">
-        <h4 id="docTitle">Create Review</h4>
-        <div id="form">
+    <div id="create" class="row">
+        <div class="col-2">
+            <ReviewSidebar/>
+        </div>
+        <div class="col-10">
             <!-- title -->
-            <b-form-group class="mb-2" label="Title" label-for="title" description="Write your review for the movie">
-                <b-form-input type="text" id="title" v-model="reviewData.title"> </b-form-input>
-            </b-form-group>
-            <!-- rating -->
-            <b-input-group class="mb-2">
-                <b-input-group-prepend><b-button id="ratingButton">Rating</b-button>   
-                </b-input-group-prepend>
-                <b-form-rating v-model="reviewData.rating" stars="10" variant="warning"></b-form-rating>
-                <b-input-group-append>
-                    <b-input-group-text class="justify-content-center" style="min-width: 3em;">
-                    {{ reviewData.rating }}
-                    </b-input-group-text>
-                </b-input-group-append>
-            </b-input-group>
-            
-            <!-- content -->
-            <b-form-group class="mb-2" label="Content" label-for="content">
-                <b-form-textarea
-                id="content"
-                v-model="reviewData.content"
-                placeholder="Write your review content"
-                ></b-form-textarea>
-            </b-form-group>
-            <b-button id="submitButton" @click="onWrite">Submit</b-button> 
+            <div id="form">
+                <b-form-group class="mb-2" label="Title" label-for="title" description="Write your review for the movie">
+                    <b-form-input type="text" id="title" v-model="reviewData.title"> </b-form-input>
+                </b-form-group>
+                <!-- rating -->
+                <b-input-group class="mb-2">
+                    <b-input-group-prepend><b-button id="ratingButton">Rating</b-button>   
+                    </b-input-group-prepend>
+                    <b-form-rating v-model="reviewData.rating" stars="10" variant="warning"></b-form-rating>
+                    <b-input-group-append>
+                        <b-input-group-text class="justify-content-center" style="min-width: 3em;">
+                        {{ reviewData.rating }}
+                        </b-input-group-text>
+                    </b-input-group-append>
+                </b-input-group>
+                
+                <!-- content -->
+                <b-form-group class="mb-2" label="Content" label-for="content">
+                    <b-form-textarea
+                    id="content"
+                    v-model="reviewData.content"
+                    placeholder="Write your review content"
+                    ></b-form-textarea>
+                </b-form-group>
+                <b-button id="submitButton" @click="onWrite">Submit</b-button> 
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import ReviewSidebar from '@/components/ReviewSidebar.vue'
 import { mapActions } from 'vuex'
 export default {
     name: 'ReviewCreate',
+    components: {
+        ReviewSidebar,
+    },
     data() {
         return {
             reviewData: {
@@ -55,16 +63,12 @@ export default {
 </script>
 
 <style scoped>
-#docTitle {
-    
-}
-#create {
-    width: 75%;
-    margin: 30px auto;
-}
+
 #form {
+    width: 80%;
     text-align: left;
-    margin-top: 30px;
+    margin: 30px auto;
+    
 }
 b-form-group {
     text-align: left;
@@ -73,7 +77,7 @@ b-form-group {
     height: 300px;
 }
 #rating {
-    width: 75%;
+    width: 80%;
 }
 #submitButton {
     background-color: #3fb883;

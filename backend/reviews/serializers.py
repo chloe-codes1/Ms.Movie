@@ -16,10 +16,9 @@ class CommentSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=False)
     created_at = serializers.DateTimeField(required=False)
-    
     class Meta:
         model = Review
-        fields = ('id', 'title', 'content', 'user', 'created_at', 'updated_at', 'rating', 'movie',)
+        fields = ('id', 'title', 'content', 'user', 'created_at', 'updated_at', 'rating', 'movie', )
         read_only_fields = ('id', 'user', 'created_at', 'updated_at', 'movie',)
 
 
@@ -37,6 +36,8 @@ class ReviewDetailSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source="user.username")
     movie_title = serializers.CharField(source="movie.title")
     comment_set = CommentSerializer(many=True, read_only=True)
+    likes = serializers.CharField(source="liked_users.count")
+    dislikes = serializers.CharField(source="disliked_users.count")
     class Meta:
         model = Review
         fields = '__all__'

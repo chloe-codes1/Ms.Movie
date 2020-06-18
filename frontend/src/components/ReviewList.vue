@@ -1,25 +1,26 @@
 <template>
-<div id="review-list">
-    <h4>Review List</h4>
-    <div>
-        <router-link :to="'/reviews/' + id + '/create'"><b-button>New</b-button></router-link>
+<div>
+    <div id="review-list">
+        <div>
+            <router-link :to="'/reviews/' + id + '/create'"><b-button>New</b-button></router-link>
+        </div>
+        <table class="table table-hover table-md">
+            <thead>
+                <tr>
+                    <th scope="col" width="10%">ID</th>
+                    <th cope="col" width="75%;">Title</th>
+                    <th scope="col">User</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="review in reviews" :key="review.id" :review='review'>
+                    <th scope="row">{{review.id}}</th>
+                    <b-link :href="`http://localhost:8080/reviews/detail/${review.id}`"><td>{{review.title}}</td></b-link>
+                    <td>{{review.user}}</td>    
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <table class="table table-hover table-md">
-        <thead>
-            <tr>
-                <th scope="col" width="10%">ID</th>
-                <th cope="col" width="75%;">Title</th>
-                <th scope="col">User</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="review in reviews" :key="review.id" :review='review'>
-                <th scope="row">{{review.id}}</th>
-                <b-link :href="`http://localhost:8080/reviews/detail/${review.id}`"><td>{{review.title}}</td></b-link>
-                <td>{{review.user}}</td>    
-            </tr>
-        </tbody>
-    </table>
 </div>
 </template>
 <script>
@@ -47,7 +48,7 @@ thead {
     color: white;
 }
 #review-list {
-    width: 75%;
+    width: 80%;
     margin: 30px auto;
 }
 button {

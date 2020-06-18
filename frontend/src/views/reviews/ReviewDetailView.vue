@@ -1,67 +1,76 @@
 <template>
-    <div id="review-detail">
-        
-        <ReviewDetail :reviews="reviews" :likes="likes" :dislikes="dislikes"/>
-        <div id="buttons-like">
-            <div id="likes">
-                <!-- <b-button size="sm" id="likeButton" @click="likeReview(reviews.id)"><i id="likeThumb" class="far fa-thumbs-up fa-md" aria-hidden="true">Like</i></b-button> -->
-                <b-button size="sm" id="likeButton" @click="templike"><i id="likeThumb" class="far fa-thumbs-up fa-md" aria-hidden="true">Like</i></b-button>
-                
-                <b-button size="sm" variant="danger" @click="dislikeReview(reviews.id)"><i class="far fa-thumbs-down fa-md" aria-hidden="true"> DisLike</i></b-button>
-            </div>
-            <div v-if="userId==reviews.user">
-                <b-button size="sm" @click="goBack">Back</b-button>
-                <router-link :to="'/reviews/detail/'+reviews.id+'/update'"><b-button variant="warning" size="sm">Update</b-button></router-link>
-                <b-button size="sm" variant="danger" @click="deleteReview({id: reviews.id, movie: reviews.movie})">Delete</b-button>
-            </div>
-            <div v-else>
-                <b-button size="sm" @click="goBack">Back</b-button>
-            </div>
+    <div id="review-detail" class="row">
+        <div class="col-2">
+            <ReviewSidebar/>
         </div>
-        <CommentCreate/>
-        <CommentList :comments="reviews.comment_set" :userId="userId"/>
+        <div class="col-10">
+            <ReviewDetail :reviews="reviews" :likeCount="likeCount" :dislikeCount="dislikeCount" />
+            <div id="buttons-like">
+                <div id="likeButtons">
+                    <!-- <b-button size="sm" id="likeButton" @click="likeReview(reviews.id)"><i id="likeThumb" class="far fa-thumbs-up fa-md" aria-hidden="true">Like</i></b-button> -->
+                    <b-button size="sm" id="likeButton" @click="likeReview(reviews.id)"><i id="likeThumb" class="fa-thumbs-up fa-md" aria-hidden="true">Like</i></b-button>
+                    <b-button size="sm" variant="danger" @click="dislikeReview(reviews.id)"><i id="dislikeThumb" class="fa-thumbs-down fa-md" aria-hidden="true"> DisLike</i></b-button>
+                </div>
+                <div v-if="userId==reviews.user">
+                    <b-button size="sm" @click="goBack">Back</b-button>
+                    <router-link :to="'/reviews/detail/'+reviews.id+'/update'"><b-button variant="warning" size="sm">Update</b-button></router-link>
+                    <b-button size="sm" variant="danger" @click="deleteReview({id: reviews.id, movie: reviews.movie})">Delete</b-button>
+                </div>
+                <div v-else>
+                    <b-button size="sm" @click="goBack">Back</b-button>
+                </div>
+            </div>
+            <CommentCreate/>
+            <CommentList :comments="reviews.comment_set" :userId="userId"/>             
+        </div>
     </div>
 </template>
 
 <script>
+import ReviewSidebar from '@/components/ReviewSidebar.vue'
 import ReviewDetail from '@/components/ReviewDetail.vue'
 import CommentCreate from '@/components/CommentCreate.vue'
 import CommentList from '@/components/CommentList.vue'
 import { mapState, mapActions } from 'vuex'
+
 export default {
     name: 'ReviewDetailView',
-    data() {
-        return {
-            likes: 0,
-            dislikes: 0,
-            change: 0,
-        }
-    },
+
     components: {
         ReviewDetail,
         CommentCreate,
-        CommentList
+        CommentList,
+        ReviewSidebar
     },
     computed: {
-        ...mapState(['reviews', 'userId']),
+        ...mapState(['reviews', 'userId', 'likeCount', 'dislikeCount']),
+        isLike() {
+            const likeThumb = document.querySelector('#likeThumb')
+            if (this.reviews.liked_users.includes(Number(this.userId))) { 
+                likeThumb.classList.add('fas')
+            }
+            else {
+                likeThumb.classList.add('far')
+            }
+            return likeThumb.classList
+        },
+        isDisLike() {
+            const dislikeThumb = document.querySelector('#dislikeThumb')
+            if (this.reviews.disliked_users.includes(Number(this.userId))) { 
+                dislikeThumb.classList.add('fas')
+            }
+            else {
+                dislikeThumb.classList.add('far')
+            }
+            return dislikeThumb.classList
+        },
     },
     methods: {
         ...mapActions(['getReview', 'deleteReview', 'likeReview', 'dislikeReview']),
         goBack() {
-            this.router.push(`/reviews/${this.reviews.movie}/`)
-        },
-        templike(){
-            this.likes += 1
-        }
-    },
-    watch: {
-        change: function() {
-            this.likes = this.reviews.liked_users.length
-            this.dislikes = this.reviews.disliked_users.length
-            console.log("shffh")
-        },
-    },
-        
+            this.$router.push(`/reviews/${this.reviews.movie}/`)
+        },     
+    }, 
     created() {
         this.getReview(this.$route.params.id)
     }
@@ -71,8 +80,7 @@ export default {
 
 <style scoped>
 #review-detail {
-    width: 75%;
-    margin: 0 auto;
+   
 }
 button {
     margin: 3px;
