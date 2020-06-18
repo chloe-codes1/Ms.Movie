@@ -1,26 +1,35 @@
 <template>
-  <div class="home">
-    <img class="queen-image" alt="queen" src="../assets/crown.png">
-    <h4> 메인 페이지입니다. 이곳을 꾸며야 합니다. 하하하.</h4>
+  <div class="home container mt-4">
+    <h4 class="my-3">Movie recommendations just for {{othersAccount.username}}!</h4>
+    <p>Movie filtering based on preferences of movie recommendation algorithm.</p>
+    <div class="row">
+      <MovieItem v-for="movie in recommendations" :key="movie.id" :movie="movie" class="col-md-12 col-lg-4 col-xl-3" />
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import { mapState, mapActions, mapGetters } from "vuex";
+import MovieItem from "@/components/MovieItem";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
+    MovieItem,
+  },
+  computed: {
+    ...mapState(["recommendations",'othersAccount']),
+    ...mapGetters(['id'])
+  },
+  methods: {
+    ...mapActions(["fetchRecommendation", "getOthersAccount"]),
+  },
+  mounted() {
+    this.fetchRecommendation();
+    this.getOthersAccount(parseInt(this.id['user']));
   }
-}
+};
 </script>
 <style scoped>
-.queen-image {
-  margin-top: 200px;
-  width: 300px;
-}
 
-h4{
-  margin-top: 70px;
-}
 </style>

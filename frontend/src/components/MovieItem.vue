@@ -1,5 +1,5 @@
 <template>
-  <div  class="movieListItem col-md-12 col-lg-3 col-xl-2" data-toggle="modal" :data-target="`#movieDetail-${movie.id}`">
+  <div class="movieListItem" data-toggle="modal" :data-target="`#movieDetail-${movie.id}`">
       <div class="card my-3" style="width: 100%" >
         <img class="card-img-top" :src="posterURL" alt="movie-poster-image">
       </div>

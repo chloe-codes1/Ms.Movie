@@ -8,11 +8,16 @@ import SignupView from '@/views/accounts/SignupView.vue'
 import LoginView from '@/views/accounts/LoginView.vue'
 import LogoutView from '@/views/accounts/LogoutView.vue'
 import Profile from '@/views/accounts/Profile.vue'
+import CreateProfile from '@/views/accounts/CreateProfile.vue'
 
 import ReviewListCreate from '@/views/reviews/ReviewListCreate.vue'
 import ReviewDetailView from '@/views/reviews/ReviewDetailView.vue'
 import ReviewCreate from '@/views/reviews/ReviewCreate.vue'
 import ReviewUpdate from '@/views/reviews/ReviewUpdate.vue'
+
+
+import store from '../store'
+
 Vue.use(VueRouter)
 
   const routes = [
@@ -59,6 +64,11 @@ Vue.use(VueRouter)
     }
   },
   {
+    path: '/accounts/favorite',
+    name: 'CreateProfile',
+    component: CreateProfile
+  },
+  {
     path: '/accounts/:id',
     name: 'Profile',
     component: Profile
@@ -100,9 +110,22 @@ const router = new VueRouter({
   routes
 })
 
-// title 설정하기 ^^
+// title & authorization 처리 ^^
 router.beforeEach((to, from, next) => {
+
+  // title 설정하기 ^^
   document.title = to.meta.title || 'Ms. Movie';
-  next()
-})
+
+    const isAuthenticated = store.getters.isLoggedIn;
+
+    if (isAuthenticated) {
+      next()
+    } else if(to.name === 'LoginView' || to.name === 'SignupView') {
+      next()
+    } else { 
+    next({name: 'LoginView'})
+    }
+
+  });
+
 export default router

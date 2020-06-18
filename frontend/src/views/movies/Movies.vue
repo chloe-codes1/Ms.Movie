@@ -17,7 +17,7 @@
         <h4 class="text-left">Search result for movie title contains "{{keyword}}"</h4>
       </div>
       <div class="row">
-        <MovieItem v-for="movie in movies" :key="movie.id" :movie="movie" />
+        <MovieItem v-for="movie in movies" :key="movie.id" :movie="movie" class="col-md-12 col-lg-3 col-xl-2"/>
       </div>
     </div>
     <button @click="scrollToTop" class="button-bottom btn">Top</button>
