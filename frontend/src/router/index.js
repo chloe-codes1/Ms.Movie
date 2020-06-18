@@ -15,6 +15,7 @@ import ReviewDetailView from '@/views/reviews/ReviewDetailView.vue'
 import ReviewCreate from '@/views/reviews/ReviewCreate.vue'
 import ReviewUpdate from '@/views/reviews/ReviewUpdate.vue'
 
+import PaginationMovie from '@/components/PaginationMovie.vue'
 
 import store from '../store'
 
@@ -102,6 +103,12 @@ Vue.use(VueRouter)
       title: 'Ms.Movie | Update a review'
     }
   },
+  // Paginations Test
+  {
+    path: '/pagination',
+    name: 'PaginationMovie',
+    component: PaginationMovie
+  }
 ]
 
 const router = new VueRouter({

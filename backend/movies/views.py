@@ -53,7 +53,7 @@ class MovieAPI(APIView):
     def post(self, request, format=None):
         key = settings.TMDB_API_KEY
         base_url = 'https://api.themoviedb.org/3/'
-        for page in range(1,2): # Change it to 501 on deployment!
+        for page in range(1,5): # Change it to 501 on deployment!
             url = f'{base_url}discover/movie?api_key={key}&sort_by=popularity.desc&include_video=false&page={page}'
             response = requests.get(url).json()
             data = response['results']

@@ -80,7 +80,7 @@ a:hover {
 #sidebar {
     position: fixed;
     height: 100vh;
-    width: 200px;
+    width: 16%;
     padding: 0;
     background-color: #3fb883;
     color: white;
