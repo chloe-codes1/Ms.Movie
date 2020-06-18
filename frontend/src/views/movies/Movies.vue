@@ -17,7 +17,7 @@
         <h4 class="text-left">Search result for movie title contains "{{keyword}}"</h4>
       </div>
         <div class="row" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit">
-          <MovieItem v-for="movie in pageMovies" :key="movie.id" :movie="movie" class="col-md-12 col-lg-3 col-xl-2"/>
+          <MovieItem v-for="movie in movies" :key="movie.id" :movie="movie" class="col-md-12 col-lg-3 col-xl-2"/>
         </div> 
     </div>
     <button @click="scrollToTop" class="button-bottom btn">Top</button>
@@ -55,7 +55,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["fetchMovies"]),
+    ...mapActions(["fetchMovies", "setPage"]),
     sortGenre(value) {
       this.selectedGenre = value;
       this.fetchMovies({
@@ -63,8 +63,8 @@ export default {
           genre: value
         }
       });
-      this.selectedOrder= null;
-      this.keyword= null;
+      this.selectedOrder= null
+      this.keyword= null
     },
     sortOrder(value) {
       this.selectedOrder = value;
@@ -95,18 +95,30 @@ export default {
       while (this.start < end) {
         if (this.start === this.movies.length) {
             break }
-          axios.get(SERVER + `/movies/${this.start}`)
-            .then(res => {
-                this.pageMovies.push(res.data)
-            })
-          this.start ++
+        this.setPage(this.start)  
+        this.start ++
       }
         this.busy = false
-     }
+    }
+
+    // loadMore() {
+    //   this.busy = true
+    //   const end = this.start+this.limit
+    //   while (this.start < end) {
+    //     if (this.start === this.movies.length) {
+    //         break }
+    //       axios.get(SERVER + `/movies/${this.start}`)
+    //         .then(res => {
+    //             this.pageMovies.push(res.data)
+    //         })
+    //       this.start ++
+    //   }
+    //     this.busy = false
+    // }
   },
   //mouted 되는 시점에 바로 실행
   created() {
-    this.fetchMovies()
+    // this.fetchMovies()
   }
 };
 </script>

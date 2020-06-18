@@ -60,6 +60,9 @@ export default new Vuex.Store({
     SET_DISLIKE(state, dislike) {
       state.dislikeCount = dislike
     },
+    SET_PAGE(state, movie) {
+      state.movies.push(movie)
+    }
 
   },
   actions: { 
@@ -233,6 +236,14 @@ export default new Vuex.Store({
           commit('SET_DISLIKE', res.data.disliked_users.length)
         })
     },
+    //paginations
+    setPage({commit}, id) {
+      axios.get(SERVER.URL + `/movies/${id}`)
+        .then(res => {
+          commit('SET_PAGE', res.data)
+        })
+    }
+    
 
   },
   modules: {
