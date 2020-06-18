@@ -36,14 +36,14 @@
             <p class="movie-tagline mt-3 text-center">{{movie.tagline}}</p>
 
             <p class="font-weight-bold">Genres</p>
-              <span
-                class="badge badge-light mr-3 mb-4"
-                v-for="genre in movie.genres"
-                :key="genre.id"
-              >{{genre}}</span>
+            <span
+              class="badge badge-light mr-3 mb-4"
+              v-for="genre in movie.genres"
+              :key="genre.id"
+            >{{genre}}</span>
             <p class="font-weight-bold">Top Billed Cast</p>
             <div
-              class="badge badge-light mr-3 mb-4"
+              class="cast-profile-links badge badge-light mr-3 mb-4"
               v-for="(cast,index) in movie.casts"
               :key="index"
               data-dismiss="modal"
@@ -190,5 +190,12 @@ export default {
 
 .review-creation-btn {
   opacity: 0.8;
+}
+
+.cast-profile-links:hover {
+  transform: scale(
+    1.5
+  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  z-index: 1;
 }
 </style>

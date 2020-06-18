@@ -9,7 +9,10 @@
         style="position: absolute; left: 50%; top:0%; transform: translateX(-50%); "
       >
         <li class="list-unstyled">
-          <router-link to="/" class="text-decoration-none nav-links py-2 site-logo">Ms. Movie</router-link>
+          <router-link to="/" class="text-decoration-none nav-links py-2 site-logo">
+            <img class="queen-image" alt="queen" src="@/assets/crown.png" width="30px">
+            Ms. Movie
+          </router-link>
         </li>
       </ul>
       <div>
