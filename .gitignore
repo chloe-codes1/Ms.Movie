@@ -239,3 +239,7 @@ docs/_book
 test/
 .idea
 # End of https://www.toptal.com/developers/gitignore/api/venv,python,django,vue,visualstudiocode
+
+## VS Code
+.vscode
+settings.json

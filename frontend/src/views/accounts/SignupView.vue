@@ -10,12 +10,8 @@
         <b-form-group class="mb-2" label="Confrim password" label-for="password2" description="Retype password">
             <b-form-input type="password" id="password2" v-model="signupData.password2"> </b-form-input>
         </b-form-group>
-        <b-form-group class="mb-2" label="Favorite genre" label-for="favorite" description="Choose your favorite genre. We'll recommend movies based on your choice.">
-            <b-form-select :options="options" id="favorite" v-model="signupData.favorite"></b-form-select>
-        </b-form-group>
         <b-button @click="signup(signupData)" id="submitButton">Sign Up</b-button>
-
-        {{ signupData.favorites}}
+        
     </div>
 </template>
 
