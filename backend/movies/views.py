@@ -49,28 +49,6 @@ class MovieAPI(APIView):
         return Response(serializer.data)
 
 
-
-        # 주현 눈물의 현장 ... 추천 알고리즘...
-
-        # movies = Movie.objects.all()
-        # if request.user.is_authenticated:
-        #     try:
-        #         user = get_object_or_404(User, id=request.user.id)
-        #         recommend_movies = list(Movie.objects.filter(genres__name__icontains=user.favorite))
-        #         if len(recommend_movies) < 12:
-        #             recommend_movies += random.sample(list(Movie.objects.all()), 12-len(recommend_movies))
-        #     except UserProfile.DoesNotExist:
-        #         profile = None
-        #         recommend_movies = list(Movie.objects.all())
-        #     recommend_movies = random.sample(recommend_movies, 12)
-
-        #     serializer = MovieSerializer(recommend_movies, many=True)
-        #     return Response(serializer.data)
-        # else:
-        #     serializer = MovieSerializer(movies, many=True)
-        #     return Response(serializer.data)
-
-
     # POST 요청
     def post(self, request, format=None):
         key = settings.TMDB_API_KEY
@@ -176,4 +154,24 @@ class MovieDetailAPI(APIView):
     def get(self, request, movie_id, format=None):
         movie = get_object_or_404(Movie, pk=movie_id)
         serializer = MovieSerializer(movie)
+        return Response(serializer.data)
+
+class MovieRecommendationAPI(APIView):
+
+    def get(self, request, user_pk):
+        try:
+            user = get_object_or_404(User, id=user_pk)
+            recommend_movies = list(Movie.objects.filter(genres__name__icontains=user.userprofile.favorite))
+            print('성공쓰')
+            if len(recommend_movies) < 12:
+                recommend_movies += random.sample(list(Movie.objects.all()), 12-len(recommend_movies))
+        except UserProfile.DoesNotExist:
+            profile = None
+            recommend_movies = list(Movie.objects.all())
+            print('흠냐뤼')
+        recommend_movies = random.sample(recommend_movies, 12)
+        
+        recommend_movies = random.sample(list(Movie.objects.all()), 12)
+
+        serializer = MovieSerializer(recommend_movies, many=True)
         return Response(serializer.data)

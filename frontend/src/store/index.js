@@ -12,6 +12,9 @@ export default new Vuex.Store({
     othersAccount: null,
     movies: [],
     starredMovie: null,
+
+    recommendations: [],
+    
     reviews: [],
     likeCount: null,
     dislikeCount: null,
@@ -36,6 +39,9 @@ export default new Vuex.Store({
     },
     SET_MOVIES(state, movies){
       state.movies = movies
+    },
+    SET_RECOMMENDSTIONS(state, recommendations){
+      state.recommendations = recommendations
     },
     SET_MOVIE(state, movie){
       state.starredMovie = movie
@@ -66,7 +72,13 @@ export default new Vuex.Store({
         console.log(res.data, 'res.data')
         commit('SET_TOKEN', res.data.key)
         commit('SET_USER_ID', res.data.user)
-        router.push({ name: 'Movies'})
+        if (info.location == SERVER.ROUTES.signup){
+          router.push({ name: 'CreateProfile' })
+        }
+        else {
+          router.push({ name: 'Movies'})
+        }
+        
       })
       .catch(
         err => console.log(err.response.data)
@@ -105,6 +117,13 @@ export default new Vuex.Store({
         })
         .catch(err => console.log(err.response.data))
     },
+    createProfile({getters}, favorite) {
+      axios.post(SERVER.URL + SERVER.ROUTES.profile, favorite, getters.config)
+        .then( () => {
+          router.push('/')
+        })
+        .catch( err => console.log(err.response.data))
+    },
     getOthersAccount({ commit }, id ) {
       axios.get(SERVER.URL + SERVER.ROUTES.othersProfile + `${id}/`)
         .then(response => {
@@ -115,6 +134,12 @@ export default new Vuex.Store({
     fetchMovies({ commit}, params ) {
       axios.get( SERVER.URL + SERVER.ROUTES.movieList, {...params})
         .then(response => commit('SET_MOVIES', response.data))
+        .catch(err => console.log(err))
+    },
+    fetchRecommendation({commit, getters}){
+      const user_pk = parseInt(getters.id['user'])
+      axios.get( SERVER.URL + SERVER.ROUTES.movieRecommendation+ user_pk +'/')
+        .then( response => commit('SET_RECOMMENDSTIONS', response.data))
         .catch(err => console.log(err))
     },
     fetchMovie({ commit }, id){
@@ -130,7 +155,7 @@ export default new Vuex.Store({
     createReview( {getters}, data) {
       console.log(cookies.get('auth-token'));
       console.log(getters.config) 
-      axios.post(SERVER.URL + `/reviews/${data.id}/`, data.reviewData, getters.config)
+      axios.post(SERVER.URL + `/reviews/${data.id}/`, null,data.reviewData, getters.config)
         .then(() => {
           router.push(`/reviews/${data.id}/`)
         })

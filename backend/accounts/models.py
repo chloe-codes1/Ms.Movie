@@ -48,7 +48,7 @@ class User(AbstractUser):
     # def save_user_profile(self, instance, **kwargs):
     #     instance.profile.save()
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     favorite = models.CharField(max_length=200)
     # favorites = ListCharField(
     #     base_field=models.CharField(max_length=10),
