@@ -23,7 +23,7 @@ export default new Vuex.Store({
   getters: {
     isLoggedIn: state => !!state.authToken,
     config: () => ({headers: { Authorization: `Token ${cookies.get('auth-token')}` }}),
-    id: () => ({user: cookies.get('user')})
+    id: () => ({user: cookies.get('user')}),
   }, 
   mutations:{ 
     SET_TOKEN(state, token){
