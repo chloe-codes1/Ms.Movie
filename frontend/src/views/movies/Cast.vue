@@ -65,16 +65,12 @@ export default {
     }
   },
   methods: {
-      // ...mapActions(['fetchMovie'])
     getStarredPosters(){
       const TMDB_API_URL=`${TMDB_BASE_URL}/${this.cast.cast_id}/movie_credits?api_key=${TMDB_API_KEY}&language=en-US"`
-      console.log(TMDB_API_URL)
       axios
         .get(TMDB_API_URL)
         .then(res => {
-          console.log(res.data)
           res.data.cast.map( item => {
-            console.log(item)
             if (item.poster_path){
               this.starredMovies.push(item)
             }

@@ -24,7 +24,6 @@ class CreateUserView(CreateModelMixin, GenericViewSet):
 
 class UserAPI(APIView):
     def get(self, request):
-        print('user api called!')
         user = request.user
         serializer = UserSerializer(user)
         return Response(serializer.data)
@@ -44,7 +43,6 @@ class UserAPI(APIView):
 
 class OtherUserAPI(APIView):
     def get(self, request, user_pk):
-        print('other user api called!')
         user = get_object_or_404(User, pk=user_pk)
         serializer = UserSerializer(user)
         return Response(serializer.data)
