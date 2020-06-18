@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from rest_framework import status
+from rest_framework import status, pagination, generics
 
 from .serializers import MovieSerializer
 from .models import Movie, Country, Cast, Genre
@@ -144,8 +144,6 @@ class MovieAPI(APIView):
                     continue
                 except AttributeError:
                     continue
-           
-                    
         
         return Response(status=status.HTTP_201_CREATED)
 
@@ -162,16 +160,17 @@ class MovieRecommendationAPI(APIView):
         try:
             user = get_object_or_404(User, id=user_pk)
             recommend_movies = list(Movie.objects.filter(genres__name__icontains=user.userprofile.favorite))
-            print('성공쓰')
             if len(recommend_movies) < 12:
                 recommend_movies += random.sample(list(Movie.objects.all()), 12-len(recommend_movies))
         except UserProfile.DoesNotExist:
             profile = None
             recommend_movies = list(Movie.objects.all())
-            print('흠냐뤼')
         recommend_movies = random.sample(recommend_movies, 12)
         
         recommend_movies = random.sample(list(Movie.objects.all()), 12)
 
         serializer = MovieSerializer(recommend_movies, many=True)
         return Response(serializer.data)
+
+
+
