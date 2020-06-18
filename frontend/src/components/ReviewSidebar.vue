@@ -10,14 +10,14 @@
             <h5 style="font-weight:bold;">Review List</h5>
         </div>
         <div class="sidebar-item" v-else>
-        <router-link :to="'/reviews/'+ id"><h5>Review List</h5></router-link>
+        <router-link :to="'/reviews/'+ movieId"><h5>Review List</h5></router-link>
         </div>
         
         <div class="sidebar-item-active" v-if="path.includes('create')">
         <h5 style="font-weight:bold;">Review Create</h5>
         </div>
         <div class="sidebar-item" v-else>
-        <router-link :to="'/reviews/'+ id + '/create'"><h5>Review Create</h5></router-link>
+        <router-link :to="'/reviews/'+ movieId + '/create'"><h5>Review Create</h5></router-link>
         </div>
     </nav>
       
@@ -34,17 +34,18 @@ export default {
             path: this.$route.path,
         }
     },
+    props: ['movieId'],
     computed: {
         ...mapState(['starredMovie'])
     },
     methods: {
         ...mapActions(['fetchMovie'])
-
     },
     created() {
-        this.fetchMovie(this.id)
+        this.fetchMovie(this.movieId)
     }
 }
+
 </script>
 
 <style scoped>

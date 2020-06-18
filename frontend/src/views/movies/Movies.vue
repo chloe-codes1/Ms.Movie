@@ -16,18 +16,20 @@
       <div v-else-if="keyword">
         <h4 class="text-left">Search result for movie title contains "{{keyword}}"</h4>
       </div>
-      <div class="row">
-        <MovieItem v-for="movie in movies" :key="movie.id" :movie="movie" class="col-md-12 col-lg-3 col-xl-2"/>
-      </div>
+        <div class="row" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit">
+          <MovieItem v-for="movie in pageMovies" :key="movie.id" :movie="movie" class="col-md-12 col-lg-3 col-xl-2"/>
+        </div> 
     </div>
     <button @click="scrollToTop" class="button-bottom btn">Top</button>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import { mapState, mapActions } from "vuex";
 import MovieItem from "@/components/MovieItem";
 import MovieFilter from "@/components/MovieFilter";
+const SERVER = "http://localhost:8000"
 
 export default {
   name: "Movies",
@@ -40,6 +42,10 @@ export default {
       selectedGenre: null,
       selectedOrder: null,
       keyword: null,
+      pageMovies: [],
+      busy: false,
+      start: 1,
+      limit: 30,
     };
   },
   computed: {
@@ -82,11 +88,25 @@ export default {
     },
     scrollToTop: function() {
       scroll(0, 0);
-    }
+    },
+    loadMore() {
+      this.busy = true
+      const end = this.start+this.limit
+      while (this.start < end) {
+        if (this.start === this.movies.length) {
+            break }
+          axios.get(SERVER + `/movies/${this.start}`)
+            .then(res => {
+                this.pageMovies.push(res.data)
+            })
+          this.start ++
+      }
+        this.busy = false
+     }
   },
   //mouted 되는 시점에 바로 실행
   created() {
-    this.fetchMovies();
+    this.fetchMovies()
   }
 };
 </script>

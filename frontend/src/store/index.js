@@ -24,6 +24,7 @@ export default new Vuex.Store({
     isLoggedIn: state => !!state.authToken,
     config: () => ({headers: { Authorization: `Token ${cookies.get('auth-token')}` }}),
     id: () => ({user: cookies.get('user')}),
+    movies: state => state.movies
   }, 
   mutations:{ 
     SET_TOKEN(state, token){
@@ -154,29 +155,30 @@ export default new Vuex.Store({
     createReview( {getters}, data) {
       console.log(cookies.get('auth-token'));
       console.log(getters.config) 
-      axios.post(SERVER.URL + `/reviews/${data.id}/`, null,data.reviewData, getters.config)
+      axios.post(SERVER.URL + `/reviews/${data.id}/`, data.reviewData, getters.config)
         .then(() => {
           router.push(`/reviews/${data.id}/`)
         })
         .catch(err => console.log(err))
     },
     // Detail
-    getReview( { commit }, info ) {
-      axios.get(SERVER.URL + `/reviews/detail/` + info)
+    getReview( { commit }, data ) {
+      axios.get(SERVER.URL + `/reviews/${data.movie}/detail/${data.id}`)
         .then(response => commit('SET_REVIEWS', response.data))
         .catch(err => console.log(err))
     },
     updateReview( {getters}, data) {
-      console.log(data.reviewData)
-      console.log(data.id)
-      axios.put(SERVER.URL + `/reviews/detail/${data.id}/`, data.reviewData, getters.config)
+      
+      console.log(data)
+      axios.put(SERVER.URL + `/reviews/${data.movie}/detail/${data.id}/`, data.reviewData, getters.config)
         .then(() => {
-          router.push(`/reviews/detail/${data.id}/`)
+          router.push(`/reviews/${data.movie}/detail/${data.id}/`)
         })
         .catch(err => console.log(err))
     },
     deleteReview( {getters}, data) {
-      axios.delete(SERVER.URL + `/reviews/detail/${data.id}/`, getters.config)
+      console.log(data)
+      axios.delete(SERVER.URL + `/reviews/${data.movie}/detail/${data.id}/`, getters.config)
         .then(() => {
           router.push(`/reviews/${data.movie}`)
         })

@@ -11,7 +11,7 @@ export default{
         movieRecommendation: '/movies/recommendation/',
         movieDetail: '/movies/:id/',
         reviewList: '/reviews/:id/',
-        reviewDetail: '/reviews/detail/:id',
+        reviewDetail: '/reviews/:movieId/detail/:id',
         commentCreate: '/reviews/:id/comments/',
         commentDetail: '/reviews/:reviewId/comments/:commentId',
         reviewLike: '/reviews/:id/like/',
