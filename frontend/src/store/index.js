@@ -8,14 +8,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     authToken: cookies.get('auth-token'),
-
     account: null,
     othersAccount: null,
-    
     movies: [],
     starredMovie: null,
-    
     reviews: [],
+    likeCount: null,
+    dislikeCount: null,
     userId: cookies.get('user'),
   },
   getters: {
@@ -43,12 +42,21 @@ export default new Vuex.Store({
     },
     SET_REVIEWS(state, reviews){
       state.reviews = reviews
+      state.likeCount = reviews.likes
+      state.dislikeCount = reviews.dislikes
     },
     SET_USER_ID(state, id) {
       console.log('user왔다', id)
       cookies.set('user', id) 
       console.log('ㅎㅎ',cookies.get('user'))
     },
+    SET_LIKE(state, like) {
+      state.likeCount = like
+    },
+    SET_DISLIKE(state, dislike) {
+      state.dislikeCount = dislike
+    },
+
   },
   actions: { 
     
@@ -169,18 +177,34 @@ export default new Vuex.Store({
         router.history.go(0)
         })
     },
-    likeReview( {getters}, data) {
-      console.log(getters.id)
-      console.log(SERVER.URL + `/reviews/${data}/like`)
+    likeReview( {getters, commit}, data) {
       axios.put(SERVER.URL + `/reviews/${data}/like/`, getters.id)
         .then( (res) => {
-          console.log(res.data)
+          const likeThumb = document.querySelector('#likeThumb')
+          if (res.data.liked_users.includes(Number(getters.id.user))) { 
+            likeThumb.classList.add('fas')
+            likeThumb.classList.remove('far')
+          }
+          else {
+            likeThumb.classList.add('far')
+            likeThumb.classList.remove('fas')
+          }
+          commit('SET_LIKE', res.data.liked_users.length)
         })
     },
-    dislikeReview( {getters}, data) {
+    dislikeReview( {getters, commit}, data) {
       axios.put(SERVER.URL + `/reviews/${data}/dislike/`, getters.id)
         .then( (res) => {
-          console.log(res.data)
+          const dislikeThumb = document.querySelector('#dislikeThumb')
+          if (res.data.disliked_users.includes(Number(getters.id.user))) { 
+            dislikeThumb.classList.add('fas')
+            dislikeThumb.classList.remove('far')
+          }
+          else {
+            dislikeThumb.classList.add('far')
+            dislikeThumb.classList.remove('fas')
+          }
+          commit('SET_DISLIKE', res.data.disliked_users.length)
         })
     },
 

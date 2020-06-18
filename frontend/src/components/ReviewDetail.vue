@@ -5,8 +5,8 @@
     <div id="review-detail">
         <div id="title-content">
             <div id="empty">
-                <i class="far fa-thumbs-up fa-md" aria-hidden="true">{{likes}}</i>
-                <i class="far fa-thumbs-down fa-md" aria-hidden="true"> {{dislikes}} </i>
+                <i class="far fa-thumbs-up fa-md" aria-hidden="true" id="likeCount"> {{likeCount}} </i>
+                <i class="far fa-thumbs-down fa-md" aria-hidden="true"> {{dislikeCount}} </i>
             </div>
             <div>
                 <h5>{{reviews.title}}</h5>
@@ -34,7 +34,7 @@
 
 export default {
     name: 'ReviewDetailView',
-    props: ['reviews', 'likes', 'dislikes'],
+    props: ['reviews', 'likeCount', 'dislikeCount'],
     data() {
         return {
             id: this.$route.params.id,
