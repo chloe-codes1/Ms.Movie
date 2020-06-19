@@ -1,7 +1,7 @@
 <template>
   <div v-if="cast">
     <div class="row px-4 py-3">
-      <div class="col-3">
+      <div class="col-md-12 col-lg-3">
         <div class="mb-4">
           <img class="card-img-top" :src="profileURL" alt="cast-profile-image"/>
         </div>
@@ -17,14 +17,14 @@
           <p>{{ cast.place_of_birth}}</p>
         </div>
       </div>
-      <div class="col-9 mt-3 text-left">
+      <div class="col-md-12 col-lg-9 mt-3 text-left">
         <h2 class="font-weight-bold mb-4"> {{cast.name}}</h2>
         <h4 class="font-weight-bold mb-2"> Biography</h4>
         <div class="mb-4">{{ cast.biography}}</div>
         
         <h4 class="font-weight-bold mb-2"> Known for</h4>
         <div v-if="starredMovies.length > 1" class="row">
-          <div class="col-2" v-for="(starredMovie, idx) in starredMovies" :key="idx">
+          <div class="col-md-6 col-lg-4 col-xl-2" v-for="(starredMovie, idx) in starredMovies" :key="idx">
             <img class="card-img-top d-block" :src="'https://image.tmdb.org/t/p/w300//' +starredMovie.poster_path " alt="movie-poster-image">
             <p class="text-center font-weight-bold mb-1"> {{starredMovie.title}} </p>
             <p class="text-center"> {{starredMovie.character}} </p>

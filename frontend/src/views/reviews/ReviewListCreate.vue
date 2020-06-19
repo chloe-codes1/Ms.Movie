@@ -1,11 +1,11 @@
 <template>
     <div class="row">
-        <div class="col-2">
-        <ReviewSidebar :movieId="id"/>
+        <div class="col-md-12 col-lg-2">
+            <ReviewSidebar :movieId="id"/>
         </div>
-        <div class="col-10">
-        <ReviewList :reviews="reviews"/>       
-        </div>
+        <div class="col-md-12 col-lg-10">
+            <ReviewList :reviews="reviews" />
+        </div>       
     </div>
 </template>
 

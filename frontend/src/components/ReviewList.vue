@@ -4,7 +4,8 @@
         <div>
             <router-link :to="'/reviews/' + id + '/create'"><b-button>New</b-button></router-link>
         </div>
-        <table class="table table-hover table-md">
+        <div class="table-responsive-sm">
+        <table class="table table-hover ">
             <thead>
                 <tr>
                     <th scope="col" width="10%">ID</th>
@@ -15,12 +16,12 @@
             <tbody>
                 <tr v-for="review in reviews" :key="review.id" :review='review'>
                     <th scope="row">{{review.id}}</th>
-                    
-                    <b-link :href="`http://localhost:8080/reviews/${id}/detail/${review.id}`"><td>{{review.title}}</td></b-link>
+                    <router-link :to="'/reviews/'+ id + '/detail/' + review.id"><td>{{review.title}}</td></router-link>
                     <td>{{review.user}}</td>    
                 </tr>
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 </template>
@@ -49,7 +50,6 @@ thead {
     color: white;
 }
 #review-list {
-    width: 80%;
     margin: 30px auto;
 }
 button {

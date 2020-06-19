@@ -30,7 +30,6 @@ class ReviewListCreate(APIView):
             review = serializer.save(user=user, movie=movie)
             if review:
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
       
@@ -45,11 +44,7 @@ class ReviewDetail(APIView):
     @permission_classes([IsAuthenticated])
     def put(self, request, movie_pk, review_pk):
         review = self.get_object(review_pk)
-        print(request)
-        print(request.user)
         if review.user == request.user:
-            print(review.user)
-            print(request.user)
             serializer = ReviewSerializer(review, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
@@ -76,8 +71,6 @@ class Like(APIView):
         review = get_object_or_404(Review, pk=review_pk)
         user_id = (int(request.data['user']))
         user = User.objects.get(id=user_id)
-        print(user)
-        print(user.id)
         if review.liked_users.filter(id=user.id).exists():
             review.liked_users.remove(user)
         else:
