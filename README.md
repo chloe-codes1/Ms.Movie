@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> Movie recommendations just for you
+> :film_strip: Community for movie lovers
 
 <br>
 
@@ -16,11 +16,7 @@
 
 <br>
 
-<br>
-
 ## Tech Stack
-
-<br>
 
 ### Backend
 
@@ -29,8 +25,6 @@
 - djangorestframework `3.11.0`
 - django-allauth `0.42.0`
 - mysqlclient `1.4.6`
-
-<br>
 
 ### Frontend
 
@@ -43,19 +37,13 @@
 - bootstrap `4.5.0`
 - bootstrap-vue `2.15.0`
 
-<br>
-
 ### Database
 
 - MySQL  `14.14`
 
-<br>
-
 ### SCM
 
 - Git  `2.17.1`
-
-<br>
 
 ### Deployment
 
@@ -63,11 +51,87 @@
 
 <br>
 
+## Overview
+
+<br>
+
+> Signup
+
+![](./README-images/signup.png)
+
+> Select favorite genre
+
+![](./README-images/favorite.png)
+
+
+
+> Login
+
+![](./README-images/login.png)
+
+> Movie Recommendation
+
+![](./README-images/recommendation.png)
+
+<br>
+
+> Movies
+
+![](./README-images/movies.png)
+
+<br>
+
+> Search
+
+![](./README-images/search.png)
+
+<br>
+
+> Movie detail -1
+
+![](./README-images/detail_01.png)
+
+<br>
+
+> Movie detail -2
+
+![](./README-images/detail_02.png)
+
+<br>
+
+> Trailer
+
+![](./README-images/trailer.png)
+
+<br>
+
+> Write a review
+
+![](./README-images/create_review.png)
+
+<br>
+
+> Review Detail
+
+![](./README-images/review-detail_01.png)
+
+<br>
+
+> Comment
+
+![](./README-images/review-detail_02.png)
+
+<br>
+
+> Cast info
+
+![](./README-images/cast.png)
+
+<br>
+
 <br>
 
 ## Install
-
-<br>
 
 ### Backend
 
@@ -76,8 +140,6 @@ $ cd backend
 $ python install -r requirements.txt
 $ python manage.py migrate
 ```
-
-<br>
 
 ### Frontend
 
@@ -88,11 +150,7 @@ $ npm install
 
 <br>
 
-<br>
-
 ## Usage
-
-<br>
 
 ### Backend
 
@@ -101,16 +159,12 @@ $ cd backend
 $ python manage.py runserver
 ```
 
-<br>
-
 ### Frontend
 
 ```sh
 $ cd frontend
 $ npm run serve
 ```
-
-<br>
 
 ## Run tests
 

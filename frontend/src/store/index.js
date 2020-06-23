@@ -18,7 +18,7 @@ export default new Vuex.Store({
     reviews: [],
     likeCount: null,
     dislikeCount: null,
-    userId: cookies.get('user'),
+    userId: null,
   },
   getters: {
     isLoggedIn: state => !!state.authToken,
@@ -52,6 +52,7 @@ export default new Vuex.Store({
       state.dislikeCount = reviews.dislikes
     },
     SET_USER_ID(state, id) {
+      state.userId= id
       cookies.set('user', id) 
     },
     SET_LIKE(state, like) {
@@ -104,9 +105,10 @@ export default new Vuex.Store({
         .then( ()=> { //Django DB에서는 삭제되어 있음 but, cookie, state에는 남아있음
           // cookies.remove가 null 뒤에 들어가야함!
           commit('SET_TOKEN', null)  // commit은 state 를 바꿀 수 있는 유일한 방법!!! -> state 에서도 삭제
-          commit('SET_USER_ID', [])
+          commit('SET_USER_ID', null)
           cookies.remove('auth-token') //cookie 에서는 삭제
-          router.push('/')
+          cookies.remove('user')
+          router.history.go(0)
         })
         .catch(err => console.log(err.response.data))
     },
