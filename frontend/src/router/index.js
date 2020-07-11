@@ -1,20 +1,17 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '@/views/Home.vue'
-import Movies from '@/views/movies/Movies.vue'
 import Cast from '@/views/movies/Cast.vue'
-
-import SignupView from '@/views/accounts/SignupView.vue'
+import CreateProfile from '@/views/accounts/CreateProfile.vue'
+import Home from '@/views/Home.vue'
 import LoginView from '@/views/accounts/LoginView.vue'
 import LogoutView from '@/views/accounts/LogoutView.vue'
+import Movies from '@/views/movies/Movies.vue'
 import Profile from '@/views/accounts/Profile.vue'
-import CreateProfile from '@/views/accounts/CreateProfile.vue'
-
-import ReviewListCreate from '@/views/reviews/ReviewListCreate.vue'
-import ReviewDetailView from '@/views/reviews/ReviewDetailView.vue'
 import ReviewCreate from '@/views/reviews/ReviewCreate.vue'
+import ReviewDetailView from '@/views/reviews/ReviewDetailView.vue'
+import ReviewListCreate from '@/views/reviews/ReviewListCreate.vue'
 import ReviewUpdate from '@/views/reviews/ReviewUpdate.vue'
-
+import SignupView from '@/views/accounts/SignupView.vue'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 import store from '../store'
 
 Vue.use(VueRouter)

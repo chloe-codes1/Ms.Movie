@@ -51,6 +51,14 @@
 
 <br>
 
+## ERD
+
+![](./README-images/erd.png)
+
+
+
+<br>
+
 ## Overview
 
 <br>
