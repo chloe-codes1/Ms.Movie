@@ -44,6 +44,6 @@ six==1.15.0
 soupsieve==2.0.1
 sqlparse==0.4.4
 traitlets==4.3.3
-urllib3==1.26.5
+urllib3==1.26.19
 wcwidth==0.2.4
 zipp==3.1.0
